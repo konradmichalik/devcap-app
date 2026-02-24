@@ -1,4 +1,4 @@
-name: WorklogMenubar
+name: WorklogApp
 options:
   bundleIdPrefix: com.konradmichalik
   deploymentTarget:
@@ -6,14 +6,15 @@ options:
   xcodeVersion: "16.0"
 
 targets:
-  WorklogMenubar:
+  WorklogApp:
     type: application
     platform: macOS
     sources:
       - WorklogMenubar
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.konradmichalik.worklog-menubar
+        PRODUCT_BUNDLE_IDENTIFIER: com.konradmichalik.worklog-app
+        PRODUCT_NAME: WorklogApp
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
         SWIFT_VERSION: "6.0"

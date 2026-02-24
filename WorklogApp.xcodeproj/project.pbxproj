@@ -7,121 +7,121 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		261734C0C267EAEA10A2436C /* WorklogBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A095B04D73C40DF9CCCB21 /* WorklogBridge.swift */; };
-		2AE420BED78895790A3EFC36 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC151F994DAB4C1C74C96D1 /* AppState.swift */; };
-		4A74356603B8C33CC72A87A2 /* MenubarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F659855052D2D311C9F07F4 /* MenubarView.swift */; };
-		6A2A36A96F5CF96F59FFBF52 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11575BAD01A2830730BC2028 /* SettingsView.swift */; };
-		9CC5DDC46C3AC1542F06D149 /* ProjectSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11B1C62D67C75E04EE5D6D8 /* ProjectSection.swift */; };
-		E7F5504AEE17A320340F80B6 /* GitIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFE19DE1AEF53B03B79FC60 /* GitIcon.swift */; };
-		EED10EDB08AD0FC050A88D9E /* WorklogMenubarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A7C5C72A7FDF47D997E43C /* WorklogMenubarApp.swift */; };
-		FFAAA31B6A9E97CADF98888F /* WorklogData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F7E208858741555B177E8C /* WorklogData.swift */; };
+		01D5C43F0A78EB27AC868855 /* WorklogBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798200D3CF513CB03A607995 /* WorklogBridge.swift */; };
+		139144889D732DB69356296B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AB8FDD3F31A4CC87619A75 /* SettingsView.swift */; };
+		1C4A357FB4737CF09A11813E /* ProjectSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE773EE40C6DE8AAC59C8136 /* ProjectSection.swift */; };
+		3E618BD837E24BC619D2108D /* MenubarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E18703B0EDF6A64B2D294C /* MenubarView.swift */; };
+		590EE930B2E5FF18CCF33BBB /* GitIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D19307BA16805F620C89059 /* GitIcon.swift */; };
+		7A9D40EDF7C6967CADA5E9DC /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3237EF829E69D0440C0 /* AppState.swift */; };
+		C78CBDE1516469CDA7CBE896 /* WorklogMenubarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346FA087A721539596228889 /* WorklogMenubarApp.swift */; };
+		EC7B4D755C53A0993E5EB5CE /* WorklogData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48990FD33BED940AAD063308 /* WorklogData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		11575BAD01A2830730BC2028 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		2898186C13C60F321E670EE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		4BC151F994DAB4C1C74C96D1 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		5F659855052D2D311C9F07F4 /* MenubarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarView.swift; sourceTree = "<group>"; };
-		6CFE19DE1AEF53B03B79FC60 /* GitIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitIcon.swift; sourceTree = "<group>"; };
-		99A7C5C72A7FDF47D997E43C /* WorklogMenubarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorklogMenubarApp.swift; sourceTree = "<group>"; };
-		B1A095B04D73C40DF9CCCB21 /* WorklogBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorklogBridge.swift; sourceTree = "<group>"; };
-		B1F7E208858741555B177E8C /* WorklogData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorklogData.swift; sourceTree = "<group>"; };
-		B202B3DDE519472959EC4027 /* worklog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = worklog.h; sourceTree = "<group>"; };
-		C58C8361BEA41D9752FC7ACD /* WorklogMenubar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WorklogMenubar.entitlements; sourceTree = "<group>"; };
-		DF8941EA066B998179BD2874 /* WorklogMenubar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorklogMenubar.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F11B1C62D67C75E04EE5D6D8 /* ProjectSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSection.swift; sourceTree = "<group>"; };
+		0A41B3237EF829E69D0440C0 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		10AB8FDD3F31A4CC87619A75 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		346FA087A721539596228889 /* WorklogMenubarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorklogMenubarApp.swift; sourceTree = "<group>"; };
+		34E18703B0EDF6A64B2D294C /* MenubarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarView.swift; sourceTree = "<group>"; };
+		3D19307BA16805F620C89059 /* GitIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitIcon.swift; sourceTree = "<group>"; };
+		48990FD33BED940AAD063308 /* WorklogData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorklogData.swift; sourceTree = "<group>"; };
+		798200D3CF513CB03A607995 /* WorklogBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorklogBridge.swift; sourceTree = "<group>"; };
+		B3502D8BC6A3CDC5F3BD0AA7 /* WorklogMenubar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WorklogMenubar.entitlements; sourceTree = "<group>"; };
+		C272DB1D64C23EF77E3C7CAC /* worklog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = worklog.h; sourceTree = "<group>"; };
+		DE773EE40C6DE8AAC59C8136 /* ProjectSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSection.swift; sourceTree = "<group>"; };
+		EFC0B65A3CB16EF562F19A07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F716F5BBA711BA7E38C1E662 /* WorklogApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorklogApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		24959187AF21BD3B3B1714DE /* Views */ = {
+		0AAE5C277749914E8C6D8D95 /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
-				5F659855052D2D311C9F07F4 /* MenubarView.swift */,
-				F11B1C62D67C75E04EE5D6D8 /* ProjectSection.swift */,
-				11575BAD01A2830730BC2028 /* SettingsView.swift */,
+				C272DB1D64C23EF77E3C7CAC /* worklog.h */,
+				798200D3CF513CB03A607995 /* WorklogBridge.swift */,
 			);
-			path = Views;
+			path = Bridge;
 			sourceTree = "<group>";
 		};
-		982C43A36D4FF1ADF86C5AC5 /* WorklogMenubar */ = {
+		4562438C64221F6BEF70D7D7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6CFE19DE1AEF53B03B79FC60 /* GitIcon.swift */,
-				2898186C13C60F321E670EE5 /* Info.plist */,
-				C58C8361BEA41D9752FC7ACD /* WorklogMenubar.entitlements */,
-				99A7C5C72A7FDF47D997E43C /* WorklogMenubarApp.swift */,
-				EFF4B98079F71E66912DFD90 /* Bridge */,
-				E99E11596A84E46478E9B245 /* Models */,
-				24959187AF21BD3B3B1714DE /* Views */,
-			);
-			path = WorklogMenubar;
-			sourceTree = "<group>";
-		};
-		9DAB156E1F1FD608B79DBB3D = {
-			isa = PBXGroup;
-			children = (
-				982C43A36D4FF1ADF86C5AC5 /* WorklogMenubar */,
-				BFBB93521DEFB9D335BF3AF0 /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		BFBB93521DEFB9D335BF3AF0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				DF8941EA066B998179BD2874 /* WorklogMenubar.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		E99E11596A84E46478E9B245 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				4BC151F994DAB4C1C74C96D1 /* AppState.swift */,
-				B1F7E208858741555B177E8C /* WorklogData.swift */,
+				0A41B3237EF829E69D0440C0 /* AppState.swift */,
+				48990FD33BED940AAD063308 /* WorklogData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		EFF4B98079F71E66912DFD90 /* Bridge */ = {
+		6466673B778A35715DC06A49 = {
 			isa = PBXGroup;
 			children = (
-				B202B3DDE519472959EC4027 /* worklog.h */,
-				B1A095B04D73C40DF9CCCB21 /* WorklogBridge.swift */,
+				81B28DF2D25B4E358271AB6B /* WorklogMenubar */,
+				BD3CAF1BF2404B4918A0ED4B /* Products */,
 			);
-			path = Bridge;
+			sourceTree = "<group>";
+		};
+		6583D2D1FE672174EDB21401 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				34E18703B0EDF6A64B2D294C /* MenubarView.swift */,
+				DE773EE40C6DE8AAC59C8136 /* ProjectSection.swift */,
+				10AB8FDD3F31A4CC87619A75 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		81B28DF2D25B4E358271AB6B /* WorklogMenubar */ = {
+			isa = PBXGroup;
+			children = (
+				3D19307BA16805F620C89059 /* GitIcon.swift */,
+				EFC0B65A3CB16EF562F19A07 /* Info.plist */,
+				B3502D8BC6A3CDC5F3BD0AA7 /* WorklogMenubar.entitlements */,
+				346FA087A721539596228889 /* WorklogMenubarApp.swift */,
+				0AAE5C277749914E8C6D8D95 /* Bridge */,
+				4562438C64221F6BEF70D7D7 /* Models */,
+				6583D2D1FE672174EDB21401 /* Views */,
+			);
+			path = WorklogMenubar;
+			sourceTree = "<group>";
+		};
+		BD3CAF1BF2404B4918A0ED4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F716F5BBA711BA7E38C1E662 /* WorklogApp.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9FED806020EFA39805A5CF23 /* WorklogMenubar */ = {
+		DD0F950FB6AE4DCA9E408E93 /* WorklogApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7C121316E09FA590432F6DD7 /* Build configuration list for PBXNativeTarget "WorklogMenubar" */;
+			buildConfigurationList = 6AF6085AEC758D64220F7923 /* Build configuration list for PBXNativeTarget "WorklogApp" */;
 			buildPhases = (
-				4B91ADA1C2CAEB7F32944C91 /* Build Rust FFI */,
-				9A1BFC9714F228A2D67179E8 /* Sources */,
+				3EDF731482E4647A4583588B /* Build Rust FFI */,
+				E9C61A02DDCEDE690AD9096C /* Sources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = WorklogMenubar;
+			name = WorklogApp;
 			packageProductDependencies = (
 			);
-			productName = WorklogMenubar;
-			productReference = DF8941EA066B998179BD2874 /* WorklogMenubar.app */;
+			productName = WorklogApp;
+			productReference = F716F5BBA711BA7E38C1E662 /* WorklogApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		6B7AE62A0F023A27704E67BA /* Project object */ = {
+		ED106F2BC717AD2D4D2009CF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 			};
-			buildConfigurationList = A57F2DA71AE1555588A2F0CD /* Build configuration list for PBXProject "WorklogMenubar" */;
+			buildConfigurationList = 09927AE2214CD8CF24E10618 /* Build configuration list for PBXProject "WorklogApp" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -129,19 +129,19 @@
 				Base,
 				en,
 			);
-			mainGroup = 9DAB156E1F1FD608B79DBB3D;
+			mainGroup = 6466673B778A35715DC06A49;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9FED806020EFA39805A5CF23 /* WorklogMenubar */,
+				DD0F950FB6AE4DCA9E408E93 /* WorklogApp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4B91ADA1C2CAEB7F32944C91 /* Build Rust FFI */ = {
+		3EDF731482E4647A4583588B /* Build Rust FFI */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -163,25 +163,25 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9A1BFC9714F228A2D67179E8 /* Sources */ = {
+		E9C61A02DDCEDE690AD9096C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AE420BED78895790A3EFC36 /* AppState.swift in Sources */,
-				E7F5504AEE17A320340F80B6 /* GitIcon.swift in Sources */,
-				4A74356603B8C33CC72A87A2 /* MenubarView.swift in Sources */,
-				9CC5DDC46C3AC1542F06D149 /* ProjectSection.swift in Sources */,
-				6A2A36A96F5CF96F59FFBF52 /* SettingsView.swift in Sources */,
-				261734C0C267EAEA10A2436C /* WorklogBridge.swift in Sources */,
-				FFAAA31B6A9E97CADF98888F /* WorklogData.swift in Sources */,
-				EED10EDB08AD0FC050A88D9E /* WorklogMenubarApp.swift in Sources */,
+				7A9D40EDF7C6967CADA5E9DC /* AppState.swift in Sources */,
+				590EE930B2E5FF18CCF33BBB /* GitIcon.swift in Sources */,
+				3E618BD837E24BC619D2108D /* MenubarView.swift in Sources */,
+				1C4A357FB4737CF09A11813E /* ProjectSection.swift in Sources */,
+				139144889D732DB69356296B /* SettingsView.swift in Sources */,
+				01D5C43F0A78EB27AC868855 /* WorklogBridge.swift in Sources */,
+				EC7B4D755C53A0993E5EB5CE /* WorklogData.swift in Sources */,
+				C78CBDE1516469CDA7CBE896 /* WorklogMenubarApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		06CDB61F6A51EFD5D1E3B15A /* Release */ = {
+		3B93A2AA56ECC347620C65E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -197,37 +197,39 @@
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/worklog-ffi/target/release";
 				MARKETING_VERSION = 0.1.0;
 				OTHER_LDFLAGS = "-lworklog_ffi";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.konradmichalik.worklog-menubar";
-				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = WorklogMenubar/Bridge/worklog.h;
-				SWIFT_VERSION = 6.0;
-			};
-			name = Release;
-		};
-		2060BE84C28AB3ED41DA35DE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = WorklogMenubar/WorklogMenubar.entitlements;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WorklogMenubar/Bridge";
-				INFOPLIST_FILE = WorklogMenubar/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/worklog-ffi/target/release";
-				MARKETING_VERSION = 0.1.0;
-				OTHER_LDFLAGS = "-lworklog_ffi";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.konradmichalik.worklog-menubar";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.konradmichalik.worklog-app";
+				PRODUCT_NAME = WorklogApp;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = WorklogMenubar/Bridge/worklog.h;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
-		6601112FEE40DE6A699EAEEF /* Release */ = {
+		4873DE4DB990E170A5DCCFE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WorklogMenubar/WorklogMenubar.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WorklogMenubar/Bridge";
+				INFOPLIST_FILE = WorklogMenubar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/worklog-ffi/target/release";
+				MARKETING_VERSION = 0.1.0;
+				OTHER_LDFLAGS = "-lworklog_ffi";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.konradmichalik.worklog-app";
+				PRODUCT_NAME = WorklogApp;
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = WorklogMenubar/Bridge/worklog.h;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		4F9CCE5538423124B0878ED3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -283,7 +285,7 @@
 			};
 			name = Release;
 		};
-		86E31C91757F27A76290241F /* Debug */ = {
+		CC7636F58CEF0CD26C0AE7C2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -349,25 +351,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7C121316E09FA590432F6DD7 /* Build configuration list for PBXNativeTarget "WorklogMenubar" */ = {
+		09927AE2214CD8CF24E10618 /* Build configuration list for PBXProject "WorklogApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2060BE84C28AB3ED41DA35DE /* Debug */,
-				06CDB61F6A51EFD5D1E3B15A /* Release */,
+				CC7636F58CEF0CD26C0AE7C2 /* Debug */,
+				4F9CCE5538423124B0878ED3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A57F2DA71AE1555588A2F0CD /* Build configuration list for PBXProject "WorklogMenubar" */ = {
+		6AF6085AEC758D64220F7923 /* Build configuration list for PBXNativeTarget "WorklogApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				86E31C91757F27A76290241F /* Debug */,
-				6601112FEE40DE6A699EAEEF /* Release */,
+				3B93A2AA56ECC347620C65E4 /* Debug */,
+				4873DE4DB990E170A5DCCFE2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 6B7AE62A0F023A27704E67BA /* Project object */;
+	rootObject = ED106F2BC717AD2D4D2009CF /* Project object */;
 }

@@ -1,4 +1,4 @@
-# worklog-menubar
+# worklog.app
 
 Native macOS menubar app for [worklog-git](https://github.com/konradmichalik/worklog-git) — shows your daily git commits at a glance without leaving the keyboard.
 
@@ -36,7 +36,7 @@ make xcode    # Generate Xcode project from project.yml
 make build    # Build the .app bundle
 ```
 
-To run from Xcode, open `WorklogMenubar.xcodeproj` and press `Cmd+R`. The Rust library is built automatically via a pre-build script.
+To run from Xcode, open `WorklogApp.xcodeproj` and press `Cmd+R`. The Rust library is built automatically via a pre-build script.
 
 ## Architecture
 

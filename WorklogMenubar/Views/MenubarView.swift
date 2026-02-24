@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MenubarView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.openSettings) private var openSettings
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -27,7 +28,7 @@ struct MenubarView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text("Worklog")
+                Text("worklog.app")
                     .font(.headline)
                 Spacer()
                 Picker("", selection: $appState.period) {
@@ -57,7 +58,7 @@ struct MenubarView: View {
                         Text("·")
                             .font(.caption)
                             .foregroundStyle(.quaternary)
-                        Text("Updated \(lastRefresh, style: .relative) ago")
+                        Text("Updated \(Int(Date().timeIntervalSince(lastRefresh) / 60)) min ago")
                             .font(.caption)
                             .foregroundStyle(.tertiary)
                     }
@@ -129,7 +130,9 @@ struct MenubarView: View {
 
             Spacer()
 
-            SettingsLink {
+            Button {
+                openSettings()
+            } label: {
                 Image(systemName: "gear")
             }
             .buttonStyle(.borderless)

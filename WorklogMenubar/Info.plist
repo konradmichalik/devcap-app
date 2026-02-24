@@ -4,5 +4,7 @@
 <dict>
     <key>LSUIElement</key>
     <true/>
+    <key>CFBundleDisplayName</key>
+    <string>worklog.app</string>
 </dict>
 </plist>

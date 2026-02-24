@@ -1,4 +1,4 @@
-import Foundation
+import SwiftUI
 import Combine
 
 @MainActor
@@ -17,11 +17,16 @@ final class AppState: ObservableObject {
         projects.reduce(0) { $0 + $1.totalCommits }
     }
 
-    var badgeText: String {
-        let count = totalCommits
-        if count == 0 { return "" }
-        if count > 99 { return "99+" }
-        return "\(count)"
+    init() {
+        if scanPath.isEmpty {
+            scanPath = FileManager.default.homeDirectoryForCurrentUser
+                .appendingPathComponent("Sites")
+                .path
+        }
+        Task { [weak self] in
+            self?.refresh()
+            self?.startAutoRefresh()
+        }
     }
 
     func refresh() {
@@ -50,19 +55,5 @@ final class AppState: ObservableObject {
     func stopAutoRefresh() {
         timer?.cancel()
         timer = nil
-    }
-}
-
-import SwiftUI
-
-extension AppState {
-    func initializeIfNeeded() {
-        if scanPath.isEmpty {
-            scanPath = FileManager.default.homeDirectoryForCurrentUser
-                .appendingPathComponent("Sites")
-                .path
-        }
-        refresh()
-        startAutoRefresh()
     }
 }

@@ -28,6 +28,10 @@ struct BranchLog: Codable, Identifiable {
     let commits: [Commit]
 
     var id: String { name }
+
+    var latestActivity: String? {
+        commits.first?.relativeTime
+    }
 }
 
 struct ProjectLog: Codable, Identifiable {
@@ -39,10 +43,6 @@ struct ProjectLog: Codable, Identifiable {
 
     var totalCommits: Int {
         branches.reduce(0) { $0 + $1.commits.count }
-    }
-
-    var totalBranches: Int {
-        branches.count
     }
 
     var latestActivity: String? {

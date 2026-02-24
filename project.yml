@@ -2,7 +2,7 @@ name: WorklogMenubar
 options:
   bundleIdPrefix: com.konradmichalik
   deploymentTarget:
-    macOS: "13.0"
+    macOS: "14.0"
   xcodeVersion: "16.0"
 
 targets:
@@ -26,6 +26,7 @@ targets:
     preBuildScripts:
       - name: Build Rust FFI
         script: |
+          export PATH="$HOME/.cargo/bin:$PATH"
           cd "$PROJECT_DIR/worklog-ffi"
           cargo build --release 2>&1
         basedOnDependencyAnalysis: false

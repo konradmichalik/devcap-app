@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		261734C0C267EAEA10A2436C /* WorklogBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A095B04D73C40DF9CCCB21 /* WorklogBridge.swift */; };
 		2AE420BED78895790A3EFC36 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC151F994DAB4C1C74C96D1 /* AppState.swift */; };
-		3DC76307D2797FE55BBD5C70 /* ProjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF40F9C01510EB080280FA66 /* ProjectRow.swift */; };
 		4A74356603B8C33CC72A87A2 /* MenubarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F659855052D2D311C9F07F4 /* MenubarView.swift */; };
-		59F022A1BEC8B3B99AF65886 /* CommitRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F60EDCC24EFE4C575707283 /* CommitRow.swift */; };
 		6A2A36A96F5CF96F59FFBF52 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11575BAD01A2830730BC2028 /* SettingsView.swift */; };
+		9CC5DDC46C3AC1542F06D149 /* ProjectSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11B1C62D67C75E04EE5D6D8 /* ProjectSection.swift */; };
+		E7F5504AEE17A320340F80B6 /* GitIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFE19DE1AEF53B03B79FC60 /* GitIcon.swift */; };
 		EED10EDB08AD0FC050A88D9E /* WorklogMenubarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A7C5C72A7FDF47D997E43C /* WorklogMenubarApp.swift */; };
 		FFAAA31B6A9E97CADF98888F /* WorklogData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F7E208858741555B177E8C /* WorklogData.swift */; };
 /* End PBXBuildFile section */
@@ -20,25 +20,24 @@
 /* Begin PBXFileReference section */
 		11575BAD01A2830730BC2028 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2898186C13C60F321E670EE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		2F60EDCC24EFE4C575707283 /* CommitRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitRow.swift; sourceTree = "<group>"; };
 		4BC151F994DAB4C1C74C96D1 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		5F659855052D2D311C9F07F4 /* MenubarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarView.swift; sourceTree = "<group>"; };
+		6CFE19DE1AEF53B03B79FC60 /* GitIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitIcon.swift; sourceTree = "<group>"; };
 		99A7C5C72A7FDF47D997E43C /* WorklogMenubarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorklogMenubarApp.swift; sourceTree = "<group>"; };
 		B1A095B04D73C40DF9CCCB21 /* WorklogBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorklogBridge.swift; sourceTree = "<group>"; };
 		B1F7E208858741555B177E8C /* WorklogData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorklogData.swift; sourceTree = "<group>"; };
 		B202B3DDE519472959EC4027 /* worklog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = worklog.h; sourceTree = "<group>"; };
 		C58C8361BEA41D9752FC7ACD /* WorklogMenubar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WorklogMenubar.entitlements; sourceTree = "<group>"; };
-		CF40F9C01510EB080280FA66 /* ProjectRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRow.swift; sourceTree = "<group>"; };
 		DF8941EA066B998179BD2874 /* WorklogMenubar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorklogMenubar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F11B1C62D67C75E04EE5D6D8 /* ProjectSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		24959187AF21BD3B3B1714DE /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2F60EDCC24EFE4C575707283 /* CommitRow.swift */,
 				5F659855052D2D311C9F07F4 /* MenubarView.swift */,
-				CF40F9C01510EB080280FA66 /* ProjectRow.swift */,
+				F11B1C62D67C75E04EE5D6D8 /* ProjectSection.swift */,
 				11575BAD01A2830730BC2028 /* SettingsView.swift */,
 			);
 			path = Views;
@@ -47,6 +46,7 @@
 		982C43A36D4FF1ADF86C5AC5 /* WorklogMenubar */ = {
 			isa = PBXGroup;
 			children = (
+				6CFE19DE1AEF53B03B79FC60 /* GitIcon.swift */,
 				2898186C13C60F321E670EE5 /* Info.plist */,
 				C58C8361BEA41D9752FC7ACD /* WorklogMenubar.entitlements */,
 				99A7C5C72A7FDF47D997E43C /* WorklogMenubarApp.swift */,
@@ -158,7 +158,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$PROJECT_DIR/worklog-ffi\"\ncargo build --release 2>&1\n";
+			shellScript = "export PATH=\"$HOME/.cargo/bin:$PATH\"\ncd \"$PROJECT_DIR/worklog-ffi\"\ncargo build --release 2>&1\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -168,9 +168,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AE420BED78895790A3EFC36 /* AppState.swift in Sources */,
-				59F022A1BEC8B3B99AF65886 /* CommitRow.swift in Sources */,
+				E7F5504AEE17A320340F80B6 /* GitIcon.swift in Sources */,
 				4A74356603B8C33CC72A87A2 /* MenubarView.swift in Sources */,
-				3DC76307D2797FE55BBD5C70 /* ProjectRow.swift in Sources */,
+				9CC5DDC46C3AC1542F06D149 /* ProjectSection.swift in Sources */,
 				6A2A36A96F5CF96F59FFBF52 /* SettingsView.swift in Sources */,
 				261734C0C267EAEA10A2436C /* WorklogBridge.swift in Sources */,
 				FFAAA31B6A9E97CADF98888F /* WorklogData.swift in Sources */,
@@ -272,7 +272,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -334,7 +334,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;

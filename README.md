@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/images/worklog-app-logo-alt.png" width="128" alt="worklog.app logo">
+</p>
+
 # worklog.app
 
 Native macOS menubar app for [worklog-git](https://github.com/konradmichalik/worklog-git) — shows your daily git commits at a glance without leaving the keyboard.

@@ -54,7 +54,7 @@ final class AppState: ObservableObject {
         guard !scanPath.isEmpty else { return }
         isLoading = true
         Task.detached { [scanPath, period] in
-            let results = WorklogBridge.scan(path: scanPath, period: period, author: nil)
+            let results = DevcapBridge.scan(path: scanPath, period: period, author: nil)
             await MainActor.run { [weak self] in
                 self?.projects = results
                 self?.isLoading = false

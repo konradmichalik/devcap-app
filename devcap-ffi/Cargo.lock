@@ -199,6 +199,27 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d0a5c400df2834b80a4c3327b3aad3a4c4cd4de0629063962b03235697506a28"
 
 [[package]]
+name = "devcap-core"
+version = "0.2.0"
+source = "git+https://github.com/konradmichalik/devcap.git#909108357dfd3fffe88ec192da6080da9532cc49"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "serde",
+ "walkdir",
+]
+
+[[package]]
+name = "devcap-ffi"
+version = "0.2.0"
+dependencies = [
+ "cbindgen",
+ "devcap-core",
+ "rayon",
+ "serde_json",
+]
+
+[[package]]
 name = "either"
 version = "1.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -907,27 +928,6 @@ dependencies = [
  "serde_json",
  "unicode-xid",
  "wasmparser",
-]
-
-[[package]]
-name = "worklog-core"
-version = "0.2.0"
-source = "git+https://github.com/konradmichalik/worklog-git.git#dc9cffaf4e2b36c346f4fdd3664aef54be770686"
-dependencies = [
- "anyhow",
- "chrono",
- "serde",
- "walkdir",
-]
-
-[[package]]
-name = "worklog-ffi"
-version = "0.1.1"
-dependencies = [
- "cbindgen",
- "rayon",
- "serde_json",
- "worklog-core",
 ]
 
 [[package]]

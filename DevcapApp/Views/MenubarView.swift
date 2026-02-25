@@ -28,7 +28,7 @@ struct MenubarView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text("worklog.app")
+                Text("devcap.app")
                     .font(.headline)
                 Spacer()
                 Picker("", selection: $appState.period) {

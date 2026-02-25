@@ -1,0 +1,384 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01E1EE2411984D71B05D672C /* ProjectSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0795567F64C1C4B25423054E /* ProjectSection.swift */; };
+		0DF745D5732098CE53AF4911 /* MenubarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB8097A8FDC05DA90D14C22 /* MenubarView.swift */; };
+		4C2BC409B8D5DED86D99EEF7 /* DevcapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C70FB985E93A1CB99250B /* DevcapApp.swift */; };
+		7E3917923C4AABA4113A171C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CFA946A232A2F166D02FB /* AppState.swift */; };
+		B1994FA286395E360192573E /* DevcapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32413C618082F5851532D08 /* DevcapData.swift */; };
+		C8092F5583D1FF84685137A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0FFA6D1F6639946C3A3D935 /* Assets.xcassets */; };
+		D43218D425E8805194FEE87A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DF5743D5BF008ABB639727 /* SettingsView.swift */; };
+		E5958FBBF69FAF04346837A7 /* DevcapBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECF073274FA80933B0CE525 /* DevcapBridge.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0795567F64C1C4B25423054E /* ProjectSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSection.swift; sourceTree = "<group>"; };
+		0DB8097A8FDC05DA90D14C22 /* MenubarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarView.swift; sourceTree = "<group>"; };
+		113C70FB985E93A1CB99250B /* DevcapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevcapApp.swift; sourceTree = "<group>"; };
+		1286483BCE0D6EB8916EF95F /* DevcapApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevcapApp.entitlements; sourceTree = "<group>"; };
+		28DF5743D5BF008ABB639727 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4D5CFA946A232A2F166D02FB /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		75F9B69E4866D1C931A44463 /* DevcapApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevcapApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A31C4087C8258A03308770D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BECF073274FA80933B0CE525 /* DevcapBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevcapBridge.swift; sourceTree = "<group>"; };
+		D0FFA6D1F6639946C3A3D935 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D32413C618082F5851532D08 /* DevcapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevcapData.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0D2F8BF9B67B34271A2DAF2B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0DB8097A8FDC05DA90D14C22 /* MenubarView.swift */,
+				0795567F64C1C4B25423054E /* ProjectSection.swift */,
+				28DF5743D5BF008ABB639727 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1EA9CEE22B335547F25A3E59 = {
+			isa = PBXGroup;
+			children = (
+				A790FA9100676F856764DA2C /* DevcapApp */,
+				21FB5AAA687C28613EEAFE4D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		21F5490D56C8CF42D9BA2310 /* Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				BECF073274FA80933B0CE525 /* DevcapBridge.swift */,
+			);
+			path = Bridge;
+			sourceTree = "<group>";
+		};
+		21FB5AAA687C28613EEAFE4D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				75F9B69E4866D1C931A44463 /* DevcapApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		42396171C549AEC84562A523 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4D5CFA946A232A2F166D02FB /* AppState.swift */,
+				D32413C618082F5851532D08 /* DevcapData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A790FA9100676F856764DA2C /* DevcapApp */ = {
+			isa = PBXGroup;
+			children = (
+				D0FFA6D1F6639946C3A3D935 /* Assets.xcassets */,
+				1286483BCE0D6EB8916EF95F /* DevcapApp.entitlements */,
+				113C70FB985E93A1CB99250B /* DevcapApp.swift */,
+				A31C4087C8258A03308770D2 /* Info.plist */,
+				21F5490D56C8CF42D9BA2310 /* Bridge */,
+				42396171C549AEC84562A523 /* Models */,
+				0D2F8BF9B67B34271A2DAF2B /* Views */,
+			);
+			path = DevcapApp;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		82CE073A9EBE20AACB0FCADC /* DevcapApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C80A652587BDB24866F54FF /* Build configuration list for PBXNativeTarget "DevcapApp" */;
+			buildPhases = (
+				390C2B2E12064B5086CD6B41 /* Build Rust FFI */,
+				56C89F6919B378593A4F9011 /* Sources */,
+				42BB2605DFEA4257A0C6FCBD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DevcapApp;
+			packageProductDependencies = (
+			);
+			productName = DevcapApp;
+			productReference = 75F9B69E4866D1C931A44463 /* DevcapApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C7A55FF0B2953D6DFAB186F9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = CD0A9D1EFB8FA6EA050484C3 /* Build configuration list for PBXProject "DevcapApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 1EA9CEE22B335547F25A3E59;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				82CE073A9EBE20AACB0FCADC /* DevcapApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		42BB2605DFEA4257A0C6FCBD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8092F5583D1FF84685137A2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		390C2B2E12064B5086CD6B41 /* Build Rust FFI */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Rust FFI";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$HOME/.cargo/bin:$PATH\"\ncd \"$PROJECT_DIR/devcap-ffi\"\ncargo build --release 2>&1\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		56C89F6919B378593A4F9011 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E3917923C4AABA4113A171C /* AppState.swift in Sources */,
+				4C2BC409B8D5DED86D99EEF7 /* DevcapApp.swift in Sources */,
+				E5958FBBF69FAF04346837A7 /* DevcapBridge.swift in Sources */,
+				B1994FA286395E360192573E /* DevcapData.swift in Sources */,
+				0DF745D5732098CE53AF4911 /* MenubarView.swift in Sources */,
+				01E1EE2411984D71B05D672C /* ProjectSection.swift in Sources */,
+				D43218D425E8805194FEE87A /* SettingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		38AF406D452424A7F1D05E93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DevcapApp/DevcapApp.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/DevcapApp/Bridge";
+				INFOPLIST_FILE = DevcapApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/devcap-ffi/target/release";
+				MARKETING_VERSION = 0.2.0;
+				OTHER_LDFLAGS = "-ldevcap_ffi";
+				PRODUCT_BUNDLE_IDENTIFIER = com.konradmichalik.devcap;
+				PRODUCT_NAME = DevcapApp;
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = DevcapApp/Bridge/devcap.h;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		5BD485D1B9D6B9C40EF9BD39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		9344715AF7B794C9128AA7A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DevcapApp/DevcapApp.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/DevcapApp/Bridge";
+				INFOPLIST_FILE = DevcapApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/devcap-ffi/target/release";
+				MARKETING_VERSION = 0.2.0;
+				OTHER_LDFLAGS = "-ldevcap_ffi";
+				PRODUCT_BUNDLE_IDENTIFIER = com.konradmichalik.devcap;
+				PRODUCT_NAME = DevcapApp;
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = DevcapApp/Bridge/devcap.h;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		C595D6CC8F6BC5AA5918B6EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5C80A652587BDB24866F54FF /* Build configuration list for PBXNativeTarget "DevcapApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38AF406D452424A7F1D05E93 /* Debug */,
+				9344715AF7B794C9128AA7A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD0A9D1EFB8FA6EA050484C3 /* Build configuration list for PBXProject "DevcapApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5BD485D1B9D6B9C40EF9BD39 /* Debug */,
+				C595D6CC8F6BC5AA5918B6EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C7A55FF0B2953D6DFAB186F9 /* Project object */;
+}

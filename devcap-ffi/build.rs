@@ -6,7 +6,7 @@ fn main() {
         let out_dir = std::path::Path::new(&crate_dir)
             .parent()
             .unwrap_or(std::path::Path::new("."))
-            .join("WorklogMenubar/Bridge/worklog.h");
+            .join("DevcapApp/Bridge/devcap.h");
         bindings.write_to_file(out_dir);
     }
 }

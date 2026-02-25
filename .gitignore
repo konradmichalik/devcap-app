@@ -1,6 +1,6 @@
 # Rust
 target/
-worklog-ffi/target/
+devcap-ffi/target/
 
 # Xcode
 *.xcodeproj/xcuserdata/
@@ -15,4 +15,4 @@ build/
 .DS_Store
 
 # Generated
-WorklogMenubar/Bridge/worklog.h
+DevcapApp/Bridge/devcap.h

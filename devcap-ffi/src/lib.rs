@@ -3,7 +3,7 @@ use std::os::raw::c_char;
 use std::path::Path;
 
 use rayon::prelude::*;
-use worklog_core::{discovery, git, model, period};
+use devcap_core::{discovery, git, model, period};
 
 /// Scan repositories and return results as a JSON string.
 ///
@@ -11,9 +11,9 @@ use worklog_core::{discovery, git, model, period};
 /// - `path_ptr` must be a valid null-terminated UTF-8 string.
 /// - `period_ptr` must be a valid null-terminated UTF-8 string.
 /// - `author_ptr` may be null; if non-null it must be a valid null-terminated UTF-8 string.
-/// - The caller must free the returned pointer with `worklog_free_string`.
+/// - The caller must free the returned pointer with `devcap_free_string`.
 #[no_mangle]
-pub unsafe extern "C" fn worklog_scan(
+pub unsafe extern "C" fn devcap_scan(
     path_ptr: *const c_char,
     period_ptr: *const c_char,
     author_ptr: *const c_char,
@@ -79,10 +79,10 @@ unsafe fn scan_inner(
 /// Get the default git author name.
 ///
 /// # Safety
-/// The caller must free the returned pointer with `worklog_free_string`.
+/// The caller must free the returned pointer with `devcap_free_string`.
 /// Returns null if no author is configured.
 #[no_mangle]
-pub extern "C" fn worklog_default_author() -> *mut c_char {
+pub extern "C" fn devcap_default_author() -> *mut c_char {
     match git::default_author() {
         Some(name) => match CString::new(name) {
             Ok(s) => s.into_raw(),
@@ -92,12 +92,12 @@ pub extern "C" fn worklog_default_author() -> *mut c_char {
     }
 }
 
-/// Free a string previously returned by `worklog_scan` or `worklog_default_author`.
+/// Free a string previously returned by `devcap_scan` or `devcap_default_author`.
 ///
 /// # Safety
 /// `ptr` must be a pointer previously returned by this library, or null.
 #[no_mangle]
-pub unsafe extern "C" fn worklog_free_string(ptr: *mut c_char) {
+pub unsafe extern "C" fn devcap_free_string(ptr: *mut c_char) {
     if !ptr.is_null() {
         unsafe {
             drop(CString::from_raw(ptr));

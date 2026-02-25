@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="docs/images/worklog-app-logo-alt.png" width="128" alt="worklog.app logo">
+  <img src="docs/images/worklog-app-logo-alt.png" width="128" alt="devcap.app logo">
 </p>
 
-# worklog.app
+# devcap.app
 
-Native macOS menubar app for [worklog-git](https://github.com/konradmichalik/worklog-git) — shows your daily git commits at a glance without leaving the keyboard.
+Native macOS menubar app for [devcap](https://github.com/konradmichalik/devcap) — shows your daily git commits at a glance without leaving the keyboard.
 
 Scans a directory tree for git repos in parallel via the same Rust core, and renders a collapsible `Project > Branch > Commits` tree directly in your menubar.
 
@@ -15,8 +15,8 @@ Scans a directory tree for git repos in parallel via the same Rust core, and ren
 - **Conventional commit highlighting** — color-coded type tags (`feat`, `fix`, `refactor`, ...)
 - **Flexible time periods** — Today, Yesterday, This Week, Last 7 Days
 - **Auto-refresh** — configurable interval (5 / 15 / 30 minutes)
-- **Copy commit hash** — click any commit to copy its hash to the clipboard
-- **Parallel scanning** — powered by [rayon](https://github.com/rayon-rs/rayon) via worklog-core
+- **Copy commit hash** — right-click any commit to copy its hash to the clipboard
+- **Parallel scanning** — powered by [rayon](https://github.com/rayon-rs/rayon) via devcap-core
 
 > [!NOTE]
 > Requires `git` on `$PATH`. Author defaults to `git config --global user.name`.
@@ -26,18 +26,18 @@ Scans a directory tree for git repos in parallel via the same Rust core, and ren
 ### Homebrew (macOS)
 
 ```bash
-brew install --cask konradmichalik/tap/worklog-app
+brew install --cask konradmichalik/tap/devcap-app
 ```
 
 To update to the latest version:
 
 ```bash
-brew upgrade --cask konradmichalik/tap/worklog-app
+brew upgrade --cask konradmichalik/tap/devcap-app
 ```
 
 ### Download
 
-Grab the latest `.dmg` from [Releases](https://github.com/konradmichalik/worklog-menubar/releases), open it, and drag the app to Applications.
+Grab the latest `.dmg` from [Releases](https://github.com/konradmichalik/devcap-app/releases), open it, and drag the app to Applications.
 
 ## Building from Source
 
@@ -60,7 +60,7 @@ make xcode    # Generate Xcode project from project.yml
 make build    # Build the .app bundle
 ```
 
-To run from Xcode, open `WorklogApp.xcodeproj` and press `Cmd+R`. The Rust library is built automatically via a pre-build script.
+To run from Xcode, open `DevcapApp.xcodeproj` and press `Cmd+R`. The Rust library is built automatically via a pre-build script.
 
 ## Architecture
 
@@ -69,16 +69,16 @@ SwiftUI (MenuBarExtra)
     │
     ├── AppState          @AppStorage persisted settings
     ├── MenubarView       Collapsible project/branch/commit tree
-    └── WorklogBridge     Swift ↔ C FFI wrapper
+    └── DevcapBridge      Swift ↔ C FFI wrapper
             │
             ▼
-    worklog-ffi           Rust staticlib, cbindgen-generated C header
+    devcap-ffi            Rust staticlib, cbindgen-generated C header
             │
             ▼
-    worklog-core          Git scanning, discovery, period parsing
+    devcap-core           Git scanning, discovery, period parsing
 ```
 
-The Rust FFI layer exposes a single `worklog_scan()` function that takes a path, time period, and optional author filter — returning a JSON-encoded array of project logs. The Swift side decodes this into native structs and renders the UI.
+The Rust FFI layer exposes a single `devcap_scan()` function that takes a path, time period, and optional author filter — returning a JSON-encoded array of project logs. The Swift side decodes this into native structs and renders the UI.
 
 ## Configuration
 
@@ -92,7 +92,7 @@ All settings are accessible via the gear icon in the menubar popover:
 
 ## Related
 
-- [worklog-git](https://github.com/konradmichalik/worklog-git) — CLI tool (Homebrew: `brew install konradmichalik/tap/worklog-git`)
+- [devcap](https://github.com/konradmichalik/devcap) — CLI tool (Homebrew: `brew install konradmichalik/tap/devcap`)
 
 ## License
 

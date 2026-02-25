@@ -1,4 +1,4 @@
-name: WorklogApp
+name: DevcapApp
 options:
   bundleIdPrefix: com.konradmichalik
   deploymentTarget:
@@ -6,28 +6,28 @@ options:
   xcodeVersion: "16.0"
 
 targets:
-  WorklogApp:
+  DevcapApp:
     type: application
     platform: macOS
     sources:
-      - WorklogMenubar
+      - DevcapApp
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.konradmichalik.worklog-app
-        PRODUCT_NAME: WorklogApp
+        PRODUCT_BUNDLE_IDENTIFIER: com.konradmichalik.devcap
+        PRODUCT_NAME: DevcapApp
         MARKETING_VERSION: "0.2.0"
         CURRENT_PROJECT_VERSION: "1"
         SWIFT_VERSION: "6.0"
-        INFOPLIST_FILE: WorklogMenubar/Info.plist
-        CODE_SIGN_ENTITLEMENTS: WorklogMenubar/WorklogMenubar.entitlements
-        LIBRARY_SEARCH_PATHS: "$(PROJECT_DIR)/worklog-ffi/target/release"
-        HEADER_SEARCH_PATHS: "$(PROJECT_DIR)/WorklogMenubar/Bridge"
-        OTHER_LDFLAGS: "-lworklog_ffi"
-        SWIFT_OBJC_BRIDGING_HEADER: "WorklogMenubar/Bridge/worklog.h"
+        INFOPLIST_FILE: DevcapApp/Info.plist
+        CODE_SIGN_ENTITLEMENTS: DevcapApp/DevcapApp.entitlements
+        LIBRARY_SEARCH_PATHS: "$(PROJECT_DIR)/devcap-ffi/target/release"
+        HEADER_SEARCH_PATHS: "$(PROJECT_DIR)/DevcapApp/Bridge"
+        OTHER_LDFLAGS: "-ldevcap_ffi"
+        SWIFT_OBJC_BRIDGING_HEADER: "DevcapApp/Bridge/devcap.h"
     preBuildScripts:
       - name: Build Rust FFI
         script: |
           export PATH="$HOME/.cargo/bin:$PATH"
-          cd "$PROJECT_DIR/worklog-ffi"
+          cd "$PROJECT_DIR/devcap-ffi"
           cargo build --release 2>&1
         basedOnDependencyAnalysis: false

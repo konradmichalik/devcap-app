@@ -2,7 +2,7 @@
 
 # Build Rust FFI static library
 ffi:
-	cd worklog-ffi && cargo build --release
+	cd devcap-ffi && cargo build --release
 
 # Generate C header (happens automatically during cargo build via build.rs)
 header: ffi
@@ -13,8 +13,8 @@ xcode: header
 
 # Build the macOS app via xcodebuild
 build: xcode
-	xcodebuild -project WorklogApp.xcodeproj -scheme WorklogApp -configuration Release build
+	xcodebuild -project DevcapApp.xcodeproj -scheme DevcapApp -configuration Release build
 
 clean:
-	cd worklog-ffi && cargo clean
+	cd devcap-ffi && cargo clean
 	rm -rf DerivedData build

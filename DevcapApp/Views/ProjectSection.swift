@@ -15,8 +15,8 @@ struct ProjectSection: View {
 
     var body: some View {
         DisclosureGroup(isExpanded: $isExpanded) {
-            ForEach(project.branches) { branch in
-                BranchSection(branch: branch, expanded: defaultExpanded)
+            ForEach(project.branches, id: \.name) { branch in
+                BranchSection(branch: branch, idPrefix: project.path, expanded: defaultExpanded)
             }
         } label: {
             Label {
@@ -41,17 +41,20 @@ struct ProjectSection: View {
 
 private struct BranchSection: View {
     let branch: BranchLog
+    let idPrefix: String
     @State private var isExpanded: Bool
 
-    init(branch: BranchLog, expanded: Bool = true) {
+    init(branch: BranchLog, idPrefix: String, expanded: Bool = true) {
         self.branch = branch
+        self.idPrefix = idPrefix
         _isExpanded = State(initialValue: expanded)
     }
 
     var body: some View {
         DisclosureGroup(isExpanded: $isExpanded) {
-            ForEach(branch.commits) { commit in
+            ForEach(branch.commits, id: \.hash) { commit in
                 CommitRow(commit: commit)
+                    .id("\(idPrefix)/\(branch.name)/\(commit.hash)")
             }
         } label: {
             Label {
@@ -69,6 +72,7 @@ private struct BranchSection: View {
             .foregroundStyle(.secondary)
             .font(.subheadline)
         }
+        .id("\(idPrefix)/\(branch.name)")
     }
 }
 

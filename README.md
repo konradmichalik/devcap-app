@@ -1,14 +1,17 @@
 <p align="center">
-  <img src="docs/images/worklog-app-logo-alt.png" width="128" alt="devcap.app logo">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/devcap-app-logo-dark.svg">
+    <img src="docs/images/devcap-app-logo.svg" width="280" alt="devcap.app logo">
+  </picture>
 </p>
 
-# devcap.app
-
-Native macOS menubar app for [devcap](https://github.com/konradmichalik/devcap) — shows your daily git commits at a glance without leaving the keyboard.
+<p align="center">
+  Native macOS menubar app for <a href="https://github.com/konradmichalik/devcap">devcap</a> — shows your daily git commits at a glance without leaving the keyboard.
+</p>
 
 Scans a directory tree for git repos in parallel via the same Rust core, and renders a collapsible `Project > Branch > Commits` tree directly in your menubar.
 
-## Features
+## ✨ Features
 
 - **Menubar-native** — lives in the system menubar, no Dock icon
 - **Collapsible tree** — drill down through projects, branches, and commits
@@ -21,7 +24,7 @@ Scans a directory tree for git repos in parallel via the same Rust core, and ren
 > [!NOTE]
 > Requires `git` on `$PATH`. Author defaults to `git config --global user.name`.
 
-## Installation
+## 🔥 Installation
 
 ### Homebrew (macOS)
 
@@ -39,61 +42,9 @@ brew upgrade --cask konradmichalik/tap/devcap-app
 
 Grab the latest `.dmg` from [Releases](https://github.com/konradmichalik/devcap-app/releases), open it, and drag the app to Applications.
 
-## Building from Source
+> [!TIP]
+> Want to build from source? See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
 
-### Requirements
-
-- macOS 14.0+
-- Xcode 16+
-- Rust toolchain (`rustup`)
-- [XcodeGen](https://github.com/yonaskolb/xcodegen) — `brew install xcodegen`
-
-### Build
-
-```bash
-# Build Rust FFI + generate Xcode project + build macOS app
-make build
-
-# Or step by step:
-make ffi      # Build Rust static library
-make xcode    # Generate Xcode project from project.yml
-make build    # Build the .app bundle
-```
-
-To run from Xcode, open `DevcapApp.xcodeproj` and press `Cmd+R`. The Rust library is built automatically via a pre-build script.
-
-## Architecture
-
-```
-SwiftUI (MenuBarExtra)
-    │
-    ├── AppState          @AppStorage persisted settings
-    ├── MenubarView       Collapsible project/branch/commit tree
-    └── DevcapBridge      Swift ↔ C FFI wrapper
-            │
-            ▼
-    devcap-ffi            Rust staticlib, cbindgen-generated C header
-            │
-            ▼
-    devcap-core           Git scanning, discovery, period parsing
-```
-
-The Rust FFI layer exposes a single `devcap_scan()` function that takes a path, time period, and optional author filter — returning a JSON-encoded array of project logs. The Swift side decodes this into native structs and renders the UI.
-
-## Configuration
-
-All settings are accessible via the gear icon in the menubar popover:
-
-| Setting | Default | Description |
-|---------|---------|-------------|
-| Scan Path | `~/Sites` | Root directory to scan for git repos |
-| Period | Today | Time filter for commits |
-| Auto-refresh | 15 min | Background refresh interval (Off / 5 / 15 / 30 min) |
-
-## Related
-
-- [devcap](https://github.com/konradmichalik/devcap) — CLI tool (Homebrew: `brew install konradmichalik/tap/devcap`)
-
-## License
+## 📜 License
 
 MIT

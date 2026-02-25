@@ -33,9 +33,18 @@ struct SettingsView: View {
                     appState.startAutoRefresh()
                 }
             }
+
+            Section("Menubar Icon") {
+                Picker("Show count", selection: $appState.menubarBadge) {
+                    Text("None").tag("none")
+                    Text("Projects").tag("projects")
+                    Text("Branches").tag("branches")
+                    Text("Commits").tag("commits")
+                }
+            }
         }
         .formStyle(.grouped)
-        .frame(width: 400, height: 200)
+        .frame(width: 400, height: 260)
     }
 
     private func selectFolder() {

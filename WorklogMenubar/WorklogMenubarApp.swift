@@ -10,6 +10,9 @@ struct WorklogMenubarApp: App {
                 .environmentObject(appState)
         } label: {
             Image("MenubarIcon")
+            if let count = appState.badgeCount {
+                Text("\(count)")
+            }
         }
         .menuBarExtraStyle(.window)
 

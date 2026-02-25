@@ -12,10 +12,25 @@ final class AppState: ObservableObject {
     @AppStorage("scanPath") var scanPath = ""
     @AppStorage("period") var period = "today"
     @AppStorage("refreshInterval") var refreshInterval: TimeInterval = 900 // 15 min
+    @AppStorage("menubarBadge") var menubarBadge = "none"
+
     private var timer: AnyCancellable?
 
     var totalCommits: Int {
         projects.reduce(0) { $0 + $1.totalCommits }
+    }
+
+    var totalBranches: Int {
+        projects.reduce(0) { $0 + $1.branches.count }
+    }
+
+    var badgeCount: Int? {
+        switch menubarBadge {
+        case "projects": return projects.isEmpty ? nil : projects.count
+        case "branches": return totalBranches == 0 ? nil : totalBranches
+        case "commits": return totalCommits == 0 ? nil : totalCommits
+        default: return nil
+        }
     }
 
     func toggleExpansion() {

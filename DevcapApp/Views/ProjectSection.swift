@@ -6,6 +6,7 @@ struct ProjectSection: View {
     let project: ProjectLog
     private let defaultExpanded: Bool
     @State private var isExpanded: Bool
+    @AppStorage("showOriginIcons") private var showOriginIcons = true
 
     init(project: ProjectLog, expanded: Bool = true) {
         self.project = project
@@ -23,6 +24,13 @@ struct ProjectSection: View {
                 HStack {
                     Text(project.project)
                         .fontWeight(.semibold)
+                    if showOriginIcons, let origin = project.origin,
+                       origin != "github", origin != "gitlab", origin != "gitlab-self-hosted",
+                       origin != "bitbucket" {
+                        Text(originDisplayName(origin))
+                            .font(.caption2)
+                            .foregroundStyle(.tertiary)
+                    }
                     Spacer()
                     Text("\(project.totalCommits)")
                         .foregroundStyle(.secondary)
@@ -30,8 +38,12 @@ struct ProjectSection: View {
                         .font(.callout)
                 }
             } icon: {
-                Image(systemName: "folder.fill")
-                    .foregroundStyle(.secondary)
+                if showOriginIcons {
+                    originIcon
+                } else {
+                    Image(systemName: "folder.fill")
+                        .foregroundStyle(.secondary)
+                }
             }
             .contentShape(Rectangle())
             .onTapGesture { isExpanded.toggle() }
@@ -51,6 +63,15 @@ struct ProjectSection: View {
                     Label("Open in Terminal", systemImage: "terminal")
                 }
 
+                if let remoteUrl = project.remoteUrl,
+                   let url = URL(string: remoteUrl) {
+                    Button {
+                        NSWorkspace.shared.open(url)
+                    } label: {
+                        Label("Open in Browser", systemImage: "globe")
+                    }
+                }
+
                 Divider()
 
                 Button {
@@ -62,6 +83,41 @@ struct ProjectSection: View {
             }
         }
     }
+
+    @ViewBuilder
+    private var originIcon: some View {
+        switch project.origin {
+        case "github":
+            Image("OriginGitHub")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 14, height: 14)
+        case "gitlab", "gitlab-self-hosted":
+            Image("OriginGitLab")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 16, height: 16)
+        case "bitbucket":
+            Image("OriginBitbucket")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 14, height: 14)
+        default:
+            Image(systemName: project.origin != nil ? "globe" : "folder.fill")
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func originDisplayName(_ origin: String) -> String {
+        switch origin {
+        case "github": "GitHub"
+        case "gitlab": "GitLab"
+        case "bitbucket": "Bitbucket"
+        case "gitlab-self-hosted": "GitLab"
+        default: origin
+        }
+    }
+
 }
 
 // MARK: - Branch

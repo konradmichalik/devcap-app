@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/devcap-app-logo-dark.svg">
-    <img src="docs/images/devcap-app-logo.svg" width="280" alt="devcap.app logo">
+    <img src="docs/images/devcap-app-logo.svg" width="400" alt="devcap.app logo">
   </picture>
 </p>
 

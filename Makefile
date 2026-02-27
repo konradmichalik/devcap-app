@@ -1,4 +1,4 @@
-.PHONY: ffi header xcode build clean
+.PHONY: ffi header xcode build clean update-core
 
 # Build Rust FFI static library
 ffi:
@@ -14,6 +14,13 @@ xcode: header
 # Build the macOS app via xcodebuild
 build: xcode
 	xcodebuild -project DevcapApp.xcodeproj -scheme DevcapApp -configuration Release build
+
+# Update devcap-core to latest upstream version, rebuild FFI + header
+update-core:
+	cd devcap-ffi && cargo update -p devcap-core
+	@echo "Updated devcap-core to:"
+	@cd devcap-ffi && cargo tree -p devcap-core --depth 0
+	$(MAKE) ffi
 
 clean:
 	cd devcap-ffi && cargo clean

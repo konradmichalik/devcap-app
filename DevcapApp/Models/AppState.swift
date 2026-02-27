@@ -14,6 +14,7 @@ final class AppState: ObservableObject {
     @AppStorage("refreshInterval") var refreshInterval: TimeInterval = 900 // 15 min
     @AppStorage("menubarBadge") var menubarBadge = "none"
     @AppStorage("coloredCommitTypes") var coloredCommitTypes = true
+    @AppStorage("showOriginIcons") var showOriginIcons = true
 
     private var timer: AnyCancellable?
 

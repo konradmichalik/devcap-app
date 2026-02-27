@@ -45,10 +45,11 @@ struct SettingsView: View {
 
             Section("Appearance") {
                 Toggle("Colored commit types", isOn: $appState.coloredCommitTypes)
+                Toggle("Show provider icons", isOn: $appState.showOriginIcons)
             }
         }
         .formStyle(.grouped)
-        .frame(width: 400, height: 300)
+        .frame(width: 400)
     }
 
     private func selectFolder() {

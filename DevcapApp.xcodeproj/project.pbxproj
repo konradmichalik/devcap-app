@@ -206,7 +206,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/devcap-ffi/target/release";
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.3.0;
 				OTHER_LDFLAGS = "-ldevcap_ffi";
 				PRODUCT_BUNDLE_IDENTIFIER = com.konradmichalik.devcap;
 				PRODUCT_NAME = DevcapApp;
@@ -293,7 +293,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/devcap-ffi/target/release";
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.3.0;
 				OTHER_LDFLAGS = "-ldevcap_ffi";
 				PRODUCT_BUNDLE_IDENTIFIER = com.konradmichalik.devcap;
 				PRODUCT_NAME = DevcapApp;

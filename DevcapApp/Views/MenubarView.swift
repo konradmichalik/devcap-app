@@ -59,7 +59,7 @@ struct MenubarView: View {
                         Text("·")
                             .font(.caption)
                             .foregroundStyle(.quaternary)
-                        Text("Updated \(Int(Date().timeIntervalSince(lastRefresh) / 60)) min ago")
+                        Text(updatedText(since: lastRefresh))
                             .font(.caption)
                             .foregroundStyle(.tertiary)
                     }
@@ -69,6 +69,13 @@ struct MenubarView: View {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
+    }
+
+    private func updatedText(since date: Date) -> String {
+        let minutes = Int(Date().timeIntervalSince(date) / 60)
+        if minutes < 1 { return "Updated just now" }
+        if minutes == 1 { return "Updated 1 min ago" }
+        return "Updated \(minutes) min ago"
     }
 
     // MARK: - Content

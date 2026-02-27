@@ -37,17 +37,28 @@ struct BranchLog: Codable, Identifiable {
 struct ProjectLog: Codable, Identifiable {
     let project: String
     let path: String
+    let origin: String?
+    let remoteUrl: String?
     let branches: [BranchLog]
+
+    enum CodingKeys: String, CodingKey {
+        case project, path, origin, branches
+        case remoteUrl = "remote_url"
+    }
 
     var id: String { path }
 
     var totalCommits: Int {
-        branches.reduce(0) { $0 + $1.commits.count }
+        var seen = Set<String>()
+        return branches
+            .flatMap(\.commits)
+            .filter { seen.insert($0.hash).inserted }
+            .count
     }
 
     var latestActivity: String? {
         branches
-            .flatMap { $0.commits }
+            .flatMap(\.commits)
             .first?
             .relativeTime
     }

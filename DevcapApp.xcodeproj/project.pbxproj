@@ -12,6 +12,7 @@
 		4C2BC409B8D5DED86D99EEF7 /* DevcapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C70FB985E93A1CB99250B /* DevcapApp.swift */; };
 		7E3917923C4AABA4113A171C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CFA946A232A2F166D02FB /* AppState.swift */; };
 		B1994FA286395E360192573E /* DevcapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32413C618082F5851532D08 /* DevcapData.swift */; };
+		B7BF8A82190121D3CD9488E5 /* WindowSizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E93E8E35E5BD4D041E9FF2B /* WindowSizer.swift */; };
 		C8092F5583D1FF84685137A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0FFA6D1F6639946C3A3D935 /* Assets.xcassets */; };
 		D43218D425E8805194FEE87A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DF5743D5BF008ABB639727 /* SettingsView.swift */; };
 		E5958FBBF69FAF04346837A7 /* DevcapBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECF073274FA80933B0CE525 /* DevcapBridge.swift */; };
@@ -23,6 +24,7 @@
 		0DB8097A8FDC05DA90D14C22 /* MenubarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarView.swift; sourceTree = "<group>"; };
 		113C70FB985E93A1CB99250B /* DevcapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevcapApp.swift; sourceTree = "<group>"; };
 		1286483BCE0D6EB8916EF95F /* DevcapApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevcapApp.entitlements; sourceTree = "<group>"; };
+		1E93E8E35E5BD4D041E9FF2B /* WindowSizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowSizer.swift; sourceTree = "<group>"; };
 		28DF5743D5BF008ABB639727 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4D5CFA946A232A2F166D02FB /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		75F9B69E4866D1C931A44463 /* DevcapApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevcapApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +44,7 @@
 				0DB8097A8FDC05DA90D14C22 /* MenubarView.swift */,
 				0795567F64C1C4B25423054E /* ProjectSection.swift */,
 				28DF5743D5BF008ABB639727 /* SettingsView.swift */,
+				1E93E8E35E5BD4D041E9FF2B /* WindowSizer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				0DF745D5732098CE53AF4911 /* MenubarView.swift in Sources */,
 				01E1EE2411984D71B05D672C /* ProjectSection.swift in Sources */,
 				D43218D425E8805194FEE87A /* SettingsView.swift in Sources */,
+				B7BF8A82190121D3CD9488E5 /* WindowSizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

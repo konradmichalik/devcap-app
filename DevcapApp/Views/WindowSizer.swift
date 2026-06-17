@@ -1,31 +1,30 @@
 import AppKit
 import SwiftUI
 
-/// Resizes the hosting `MenuBarExtra(.window)` panel to fit its SwiftUI content.
+/// Resizes the hosting `MenuBarExtra(.window)` panel to a measured content height.
 ///
 /// The window-style menu bar panel grows to its largest content size but never
 /// shrinks back, which leaves the content vertically centered inside a stale,
-/// oversized window when sections collapse. Observing `fittingSize` and pinning
-/// the top edge keeps the panel snug under the menu bar.
+/// oversized window when sections collapse. The system hosting view stretches to
+/// fill that oversized window, so its `fittingSize` cannot be trusted — the real
+/// content height has to be measured on the SwiftUI side and passed in here.
 struct WindowSizer: NSViewRepresentable {
-    var trigger: CGFloat
+    /// The actual rendered height of the menu bar content, measured by the caller.
+    var contentHeight: CGFloat
 
     func makeNSView(context: Context) -> NSView {
         NSView()
     }
 
     func updateNSView(_ nsView: NSView, context: Context) {
+        let target = contentHeight
         DispatchQueue.main.async {
-            guard let window = nsView.window,
-                  let content = window.contentView else { return }
-
-            let contentHeight = content.fittingSize.height
-            guard contentHeight > 0 else { return }
+            guard target > 0, let window = nsView.window else { return }
 
             // Work in deltas against the current content rect so any titlebar
             // inset on the panel is preserved (matches FluidMenuBarExtra).
-            let previousHeight = window.contentRect(forFrameRect: window.frame).size.height
-            let deltaY = contentHeight - previousHeight
+            let currentHeight = window.contentRect(forFrameRect: window.frame).size.height
+            let deltaY = target - currentHeight
             guard abs(deltaY) > 0.5 else { return }
 
             var frame = window.frame

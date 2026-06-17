@@ -7,11 +7,19 @@ private struct ContentHeightKey: PreferenceKey {
     }
 }
 
+private struct WindowHeightKey: PreferenceKey {
+    nonisolated(unsafe) static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
+    }
+}
+
 struct MenubarView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.openSettings) private var openSettings
     @State private var visibleProjectIDs: Set<String> = []
     @State private var listContentHeight: CGFloat = 200
+    @State private var windowContentHeight: CGFloat = 0
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -30,7 +38,13 @@ struct MenubarView: View {
             footer
         }
         .frame(width: 400)
-        .background(WindowSizer(trigger: listContentHeight))
+        .background(
+            GeometryReader { geo in
+                Color.clear.preference(key: WindowHeightKey.self, value: geo.size.height)
+            }
+        )
+        .background(WindowSizer(contentHeight: windowContentHeight))
+        .onPreferenceChange(WindowHeightKey.self) { windowContentHeight = $0 }
         .onAppear {
             appState.openSettingsAction = { [openSettings] in openSettings() }
         }

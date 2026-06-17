@@ -15,7 +15,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.konradmichalik.devcap
         PRODUCT_NAME: DevcapApp
-        MARKETING_VERSION: "0.6.2"
+        MARKETING_VERSION: "0.6.3"
         CURRENT_PROJECT_VERSION: "1"
         SWIFT_VERSION: "6.0"
         INFOPLIST_FILE: DevcapApp/Info.plist

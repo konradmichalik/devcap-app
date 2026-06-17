@@ -30,6 +30,7 @@ struct MenubarView: View {
             footer
         }
         .frame(width: 400)
+        .background(WindowSizer(trigger: listContentHeight))
         .onAppear {
             appState.openSettingsAction = { [openSettings] in openSettings() }
         }

@@ -111,7 +111,7 @@ struct MenubarView: View {
         ScrollViewReader { proxy in
             HStack(spacing: 0) {
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 6) {
+                    LazyVStack(alignment: .leading, spacing: 6) {
                         ForEach(appState.projects) { project in
                             ProjectSection(project: project, expanded: appState.allExpanded)
                                 .onAppear { visibleProjectIDs.insert(project.id) }

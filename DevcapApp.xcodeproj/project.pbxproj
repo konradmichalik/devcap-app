@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		01E1EE2411984D71B05D672C /* ProjectSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0795567F64C1C4B25423054E /* ProjectSection.swift */; };
 		0DF745D5732098CE53AF4911 /* MenubarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB8097A8FDC05DA90D14C22 /* MenubarView.swift */; };
+		2D76516111CEF31E9794D186 /* TerminalLauncherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E62163AD428D2FCCFE475C9 /* TerminalLauncherTests.swift */; };
 		4C2BC409B8D5DED86D99EEF7 /* DevcapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C70FB985E93A1CB99250B /* DevcapApp.swift */; };
 		7E3917923C4AABA4113A171C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CFA946A232A2F166D02FB /* AppState.swift */; };
+		9B39365BF4CB9CDCB628E97A /* TerminalLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C472B1005F2F51515DF2C0B /* TerminalLauncher.swift */; };
 		B1994FA286395E360192573E /* DevcapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32413C618082F5851532D08 /* DevcapData.swift */; };
 		B7BF8A82190121D3CD9488E5 /* WindowSizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E93E8E35E5BD4D041E9FF2B /* WindowSizer.swift */; };
 		C8092F5583D1FF84685137A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0FFA6D1F6639946C3A3D935 /* Assets.xcassets */; };
@@ -18,6 +20,16 @@
 		E5958FBBF69FAF04346837A7 /* DevcapBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECF073274FA80933B0CE525 /* DevcapBridge.swift */; };
 		EBBF8C08BDD4A1FDE9EF84B9 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB59890A8315E079664AE40D /* AboutView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6005A18A315A300CF9117A3C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C7A55FF0B2953D6DFAB186F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82CE073A9EBE20AACB0FCADC;
+			remoteInfo = DevcapApp;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0795567F64C1C4B25423054E /* ProjectSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSection.swift; sourceTree = "<group>"; };
@@ -27,8 +39,11 @@
 		1E93E8E35E5BD4D041E9FF2B /* WindowSizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowSizer.swift; sourceTree = "<group>"; };
 		28DF5743D5BF008ABB639727 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4D5CFA946A232A2F166D02FB /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		6C472B1005F2F51515DF2C0B /* TerminalLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalLauncher.swift; sourceTree = "<group>"; };
+		6E62163AD428D2FCCFE475C9 /* TerminalLauncherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalLauncherTests.swift; sourceTree = "<group>"; };
 		75F9B69E4866D1C931A44463 /* DevcapApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevcapApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93DD08CAA17D00D4A6B51310 /* devcap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = devcap.h; sourceTree = "<group>"; };
+		9482993D9761FE1CFEB89D5E /* DevcapAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevcapAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A31C4087C8258A03308770D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BECF073274FA80933B0CE525 /* DevcapBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevcapBridge.swift; sourceTree = "<group>"; };
 		D0FFA6D1F6639946C3A3D935 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -53,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				A790FA9100676F856764DA2C /* DevcapApp */,
+				4F6EFA89CF7D56CF356BC03F /* DevcapAppTests */,
 				21FB5AAA687C28613EEAFE4D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -70,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				75F9B69E4866D1C931A44463 /* DevcapApp.app */,
+				9482993D9761FE1CFEB89D5E /* DevcapAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +100,22 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		4F6EFA89CF7D56CF356BC03F /* DevcapAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				6E62163AD428D2FCCFE475C9 /* TerminalLauncherTests.swift */,
+			);
+			path = DevcapAppTests;
+			sourceTree = "<group>";
+		};
+		7A4E6FEA1B7F534A13A48171 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				6C472B1005F2F51515DF2C0B /* TerminalLauncher.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		A790FA9100676F856764DA2C /* DevcapApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +125,7 @@
 				A31C4087C8258A03308770D2 /* Info.plist */,
 				21F5490D56C8CF42D9BA2310 /* Bridge */,
 				42396171C549AEC84562A523 /* Models */,
+				7A4E6FEA1B7F534A13A48171 /* Support */,
 				0D2F8BF9B67B34271A2DAF2B /* Views */,
 			);
 			path = DevcapApp;
@@ -100,6 +134,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0A82A429FD6A1726CA7C0247 /* DevcapAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A600E6DB37A6C789186EFB5B /* Build configuration list for PBXNativeTarget "DevcapAppTests" */;
+			buildPhases = (
+				A6CC8E6725381689AAFEC063 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E07B0B6CF15866EDE76818DF /* PBXTargetDependency */,
+			);
+			name = DevcapAppTests;
+			packageProductDependencies = (
+			);
+			productName = DevcapAppTests;
+			productReference = 9482993D9761FE1CFEB89D5E /* DevcapAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		82CE073A9EBE20AACB0FCADC /* DevcapApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5C80A652587BDB24866F54FF /* Build configuration list for PBXNativeTarget "DevcapApp" */;
@@ -127,9 +179,10 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = CD0A9D1EFB8FA6EA050484C3 /* Build configuration list for PBXProject "DevcapApp" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -139,10 +192,12 @@
 			mainGroup = 1EA9CEE22B335547F25A3E59;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
+			productRefGroup = 21FB5AAA687C28613EEAFE4D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				82CE073A9EBE20AACB0FCADC /* DevcapApp */,
+				0A82A429FD6A1726CA7C0247 /* DevcapAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -193,11 +248,28 @@
 				0DF745D5732098CE53AF4911 /* MenubarView.swift in Sources */,
 				01E1EE2411984D71B05D672C /* ProjectSection.swift in Sources */,
 				D43218D425E8805194FEE87A /* SettingsView.swift in Sources */,
+				9B39365BF4CB9CDCB628E97A /* TerminalLauncher.swift in Sources */,
 				B7BF8A82190121D3CD9488E5 /* WindowSizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A6CC8E6725381689AAFEC063 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D76516111CEF31E9794D186 /* TerminalLauncherTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E07B0B6CF15866EDE76818DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82CE073A9EBE20AACB0FCADC /* DevcapApp */;
+			targetProxy = 6005A18A315A300CF9117A3C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		38AF406D452424A7F1D05E93 /* Debug */ = {
@@ -223,6 +295,42 @@
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
+		};
+		55E42AC828657BC7C14F2C89 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.konradmichalik.devcap.tests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DevcapApp.app/Contents/MacOS/DevcapApp";
+			};
+			name = Debug;
+		};
+		59EF500B2B27BC9FB00A250E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.konradmichalik.devcap.tests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DevcapApp.app/Contents/MacOS/DevcapApp";
+			};
+			name = Release;
 		};
 		5BD485D1B9D6B9C40EF9BD39 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -375,6 +483,15 @@
 			buildConfigurations = (
 				38AF406D452424A7F1D05E93 /* Debug */,
 				9344715AF7B794C9128AA7A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A600E6DB37A6C789186EFB5B /* Build configuration list for PBXNativeTarget "DevcapAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55E42AC828657BC7C14F2C89 /* Debug */,
+				59EF500B2B27BC9FB00A250E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

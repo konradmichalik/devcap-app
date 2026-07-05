@@ -80,10 +80,7 @@ struct ProjectSection: View {
                 }
 
                 Button {
-                    let script = "tell application \"Terminal\" to do script \"cd \(project.path.replacing("\"", with: "\\\""))\""
-                    if let appleScript = NSAppleScript(source: script) {
-                        appleScript.executeAndReturnError(nil)
-                    }
+                    TerminalLauncher.open(path: project.path)
                 } label: {
                     Label("Open in Terminal", systemImage: "terminal")
                 }

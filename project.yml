@@ -32,3 +32,29 @@ targets:
           cd "$PROJECT_DIR/devcap-ffi"
           cargo build --release 2>&1
         basedOnDependencyAnalysis: false
+
+  DevcapAppTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - DevcapAppTests
+    dependencies:
+      - target: DevcapApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.konradmichalik.devcap.tests
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+
+schemes:
+  DevcapApp:
+    build:
+      targets:
+        DevcapApp: all
+        DevcapAppTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - DevcapAppTests

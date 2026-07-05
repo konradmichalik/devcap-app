@@ -85,8 +85,7 @@ struct ProjectSection: View {
                     Label("Open in Terminal", systemImage: "terminal")
                 }
 
-                if let remoteUrl = project.remoteUrl,
-                   let url = URL(string: remoteUrl) {
+                if let url = WebURL.from(project.remoteUrl) {
                     Button {
                         NSWorkspace.shared.open(url)
                     } label: {
@@ -190,8 +189,7 @@ private struct BranchSection: View {
             .contentShape(Rectangle())
             .onTapGesture { withAnimation(nil) { isExpanded.toggle() } }
             .contextMenu {
-                if let urlString = branch.url,
-                   let url = URL(string: urlString) {
+                if let url = WebURL.from(branch.url) {
                     Button {
                         NSWorkspace.shared.open(url)
                     } label: {
@@ -245,8 +243,7 @@ private struct CommitRow: View {
                 .foregroundStyle(.tertiary)
         }
         .contextMenu {
-            if let urlString = commit.url,
-               let url = URL(string: urlString) {
+            if let url = WebURL.from(commit.url) {
                 Button {
                     NSWorkspace.shared.open(url)
                 } label: {

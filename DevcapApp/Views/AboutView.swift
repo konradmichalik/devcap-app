@@ -81,7 +81,7 @@ struct AboutView: View {
 
             if latestVersion == appVersion {
                 updateState = .upToDate
-            } else if let releaseURL = URL(string: release.htmlUrl) {
+            } else if let releaseURL = WebURL.from(release.htmlUrl) {
                 updateState = .available(version: latestVersion, url: releaseURL)
             } else {
                 updateState = .error("Could not parse release URL")

@@ -191,10 +191,9 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = CD0A9D1EFB8FA6EA050484C3 /* Build configuration list for PBXProject "DevcapApp" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -204,7 +203,6 @@
 			mainGroup = 1EA9CEE22B335547F25A3E59;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 21FB5AAA687C28613EEAFE4D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -302,7 +300,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/devcap-ffi/target/release";
-				MARKETING_VERSION = 0.6.4;
+				MARKETING_VERSION = 0.6.5;
 				OTHER_LDFLAGS = "-ldevcap_ffi";
 				PRODUCT_BUNDLE_IDENTIFIER = com.konradmichalik.devcap;
 				PRODUCT_NAME = DevcapApp;
@@ -425,7 +423,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/devcap-ffi/target/release";
-				MARKETING_VERSION = 0.6.4;
+				MARKETING_VERSION = 0.6.5;
 				OTHER_LDFLAGS = "-ldevcap_ffi";
 				PRODUCT_BUNDLE_IDENTIFIER = com.konradmichalik.devcap;
 				PRODUCT_NAME = DevcapApp;

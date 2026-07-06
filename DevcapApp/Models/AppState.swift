@@ -3,7 +3,9 @@ import Combine
 
 @MainActor
 final class AppState: ObservableObject {
-    @Published var projects: [ProjectLog] = []
+    @Published var projects: [ProjectLog] = [] {
+        didSet { recomputeTotals() }
+    }
     @Published var isLoading = false
     @Published var lastRefresh: Date?
     @Published var allExpanded = true
@@ -24,12 +26,15 @@ final class AppState: ObservableObject {
 
     private var timer: AnyCancellable?
 
-    var totalCommits: Int {
-        projects.reduce(0) { $0 + $1.totalCommits }
-    }
+    /// Cached aggregates, recomputed only when `projects` changes — avoids
+    /// re-deduping commit hashes on every header/badge redraw (e.g. during the
+    /// refresh animation).
+    private(set) var totalCommits = 0
+    private(set) var totalBranches = 0
 
-    var totalBranches: Int {
-        projects.reduce(0) { $0 + $1.branches.count }
+    private func recomputeTotals() {
+        totalCommits = projects.reduce(0) { $0 + $1.totalCommits }
+        totalBranches = projects.reduce(0) { $0 + $1.branches.count }
     }
 
     var badgeCount: Int? {
@@ -77,14 +82,7 @@ final class AppState: ObservableObject {
     }
 
     private func sorted(_ items: [ProjectLog]) -> [ProjectLog] {
-        switch sortOrder {
-        case "name":
-            return items.sorted { $0.project.localizedCaseInsensitiveCompare($1.project) == .orderedAscending }
-        case "commits":
-            return items.sorted { $0.totalCommits > $1.totalCommits }
-        default:
-            return items.sorted { ($0.latestTimestamp ?? "") > ($1.latestTimestamp ?? "") }
-        }
+        ProjectSorting.sorted(items, order: sortOrder)
     }
 
     func startAutoRefresh() {

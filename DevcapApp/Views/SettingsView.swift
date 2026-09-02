@@ -11,6 +11,10 @@ struct SettingsView: View {
         ("30 minutes", 1800),
     ]
 
+    private var exportIntervalOptions: [(String, TimeInterval)] {
+        Array(refreshOptions.dropFirst())
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             Picker("", selection: $selectedTab) {
@@ -32,7 +36,7 @@ struct SettingsView: View {
                     AboutView()
                 }
             }
-            .frame(height: selectedTab == .general ? 450 : 300)
+            .frame(height: selectedTab == .general ? 540 : 300)
         }
         .frame(width: 400)
     }
@@ -81,6 +85,24 @@ struct SettingsView: View {
                 Toggle("Colored commit types", isOn: $appState.coloredCommitTypes)
                 Toggle("Show provider icons", isOn: $appState.showOriginIcons)
                 Toggle("Show diff stats", isOn: $appState.showDiffStats)
+            }
+
+            Section("Export") {
+                Toggle("Export data for external apps", isOn: $appState.exportEnabled)
+                    .onChange(of: appState.exportEnabled) {
+                        appState.exportEnabled ? appState.enableExport() : appState.disableExport()
+                    }
+
+                Picker("Export refresh interval", selection: $appState.exportInterval) {
+                    ForEach(exportIntervalOptions, id: \.1) { label, value in
+                        Text(label).tag(value)
+                    }
+                }
+                .disabled(!appState.exportEnabled)
+                .onChange(of: appState.exportInterval) {
+                    guard appState.exportEnabled else { return }
+                    appState.startExportTimer()
+                }
             }
         }
         .formStyle(.grouped)

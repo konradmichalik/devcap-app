@@ -29,6 +29,7 @@ final class AppState: ObservableObject {
 
     private var timer: AnyCancellable?
     private var exportTimer: AnyCancellable?
+    private var exportTask: Task<Void, Never>?
 
     /// Cached aggregates, recomputed only when `projects` changes — avoids
     /// re-deduping commit hashes on every header/badge redraw (e.g. during the
@@ -125,9 +126,11 @@ final class AppState: ObservableObject {
     func performExport() {
         guard !scanPath.isEmpty else { return }
         let interval = exportInterval
-        Task.detached { [scanPath] in
+        exportTask?.cancel()
+        exportTask = Task.detached { [scanPath] in
             let today = DevcapBridge.scan(path: scanPath, period: "today", author: nil)
             let week = DevcapBridge.scan(path: scanPath, period: "week", author: nil)
+            guard !Task.isCancelled else { return }
             let payload = ExportService.buildPayload(
                 today: today, week: week, ttlSeconds: Int(interval) + 60
             )
@@ -147,6 +150,7 @@ final class AppState: ObservableObject {
 
     func disableExport() {
         stopExportTimer()
+        exportTask?.cancel()
         do {
             let dir = try ExportService.applicationSupportURL()
             try ExportService.delete(from: dir)

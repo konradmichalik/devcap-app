@@ -128,12 +128,10 @@ final class AppState: ObservableObject {
         let interval = exportInterval
         exportTask?.cancel()
         exportTask = Task.detached { [scanPath] in
-            let today = DevcapBridge.scan(path: scanPath, period: "today", author: nil)
-            let week = DevcapBridge.scan(path: scanPath, period: "week", author: nil)
+            let payload = ExportService.buildPayload(ttlSeconds: Int(interval) + 60) { period in
+                DevcapBridge.scan(path: scanPath, period: period, author: nil)
+            }
             guard !Task.isCancelled else { return }
-            let payload = ExportService.buildPayload(
-                today: today, week: week, ttlSeconds: Int(interval) + 60
-            )
             do {
                 let dir = try ExportService.applicationSupportURL()
                 try ExportService.write(payload, to: dir)

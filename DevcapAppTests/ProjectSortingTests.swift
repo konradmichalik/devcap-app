@@ -4,7 +4,8 @@ import XCTest
 final class ProjectSortingTests: XCTestCase {
     private func commit(_ hash: String, timestamp: String) -> Commit {
         Commit(hash: hash, message: "feat: x", commitType: "feat",
-               timestamp: timestamp, relativeTime: "1h ago", url: nil, diffStat: nil)
+               timestamp: timestamp, committerTimestamp: timestamp,
+               relativeTime: "1h ago", url: nil, diffStat: nil)
     }
 
     private func project(_ name: String, commits: [Commit]) -> ProjectLog {
@@ -59,7 +60,8 @@ final class ProjectSortingTests: XCTestCase {
 final class ProjectLogAggregateTests: XCTestCase {
     private func commit(_ hash: String, timestamp: String) -> Commit {
         Commit(hash: hash, message: "x", commitType: nil,
-               timestamp: timestamp, relativeTime: "", url: nil, diffStat: nil)
+               timestamp: timestamp, committerTimestamp: timestamp,
+               relativeTime: "", url: nil, diffStat: nil)
     }
 
     func testTotalCommitsDeduplicatesHashesAcrossBranches() {

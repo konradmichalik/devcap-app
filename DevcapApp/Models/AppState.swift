@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import OSLog
 
 @MainActor
 final class AppState: ObservableObject {
@@ -19,12 +20,16 @@ final class AppState: ObservableObject {
     @AppStorage("showOriginIcons") var showOriginIcons = true
     @AppStorage("showDiffStats") var showDiffStats = true
     @AppStorage("sortOrder") var sortOrder = "time"
+    @AppStorage("exportEnabled") var exportEnabled = false
+    @AppStorage("exportInterval") var exportInterval: TimeInterval = 900 // 15 min
 
     /// Bridged from @Environment(\.openSettings) via MenubarView.onAppear,
     /// because the AppDelegate has no access to SwiftUI scene environments.
     var openSettingsAction: (() -> Void)?
 
     private var timer: AnyCancellable?
+    private var exportTimer: AnyCancellable?
+    private var exportTask: Task<Void, Never>?
 
     /// Cached aggregates, recomputed only when `projects` changes — avoids
     /// re-deduping commit hashes on every header/badge redraw (e.g. during the
@@ -60,6 +65,9 @@ final class AppState: ObservableObject {
         Task { [weak self] in
             self?.refresh()
             self?.startAutoRefresh()
+            if self?.exportEnabled == true {
+                self?.enableExport()
+            }
         }
     }
 
@@ -99,4 +107,57 @@ final class AppState: ObservableObject {
         timer?.cancel()
         timer = nil
     }
+
+    func startExportTimer() {
+        stopExportTimer()
+        guard exportInterval > 0 else { return }
+        exportTimer = Timer.publish(every: exportInterval, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.performExport()
+            }
+    }
+
+    func stopExportTimer() {
+        exportTimer?.cancel()
+        exportTimer = nil
+    }
+
+    func performExport() {
+        guard !scanPath.isEmpty else { return }
+        let interval = exportInterval
+        exportTask?.cancel()
+        exportTask = Task.detached { [scanPath] in
+            let today = DevcapBridge.scan(path: scanPath, period: "today", author: nil)
+            let week = DevcapBridge.scan(path: scanPath, period: "week", author: nil)
+            guard !Task.isCancelled else { return }
+            let payload = ExportService.buildPayload(
+                today: today, week: week, ttlSeconds: Int(interval) + 60
+            )
+            do {
+                let dir = try ExportService.applicationSupportURL()
+                try ExportService.write(payload, to: dir)
+            } catch {
+                Self.exportLogger.error("Export write failed: \(error)")
+            }
+        }
+    }
+
+    func enableExport() {
+        performExport()
+        startExportTimer()
+    }
+
+    func disableExport() {
+        stopExportTimer()
+        exportTask?.cancel()
+        do {
+            let dir = try ExportService.applicationSupportURL()
+            try ExportService.delete(from: dir)
+        } catch {
+            Self.exportLogger.error("Export delete failed: \(error)")
+        }
+    }
+
+    nonisolated(unsafe) private static let exportLogger = Logger(subsystem: "com.konradmichalik.devcap", category: "export")
 }

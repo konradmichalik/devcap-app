@@ -22,9 +22,20 @@ Scans a directory tree for git repos in parallel via the same Rust core, and ren
 - **Auto-refresh** — configurable interval (5 / 15 / 30 minutes)
 - **Copy commit hash** — right-click any commit to copy its hash to the clipboard
 - **Parallel scanning** — powered by [rayon](https://github.com/rayon-rs/rayon) via devcap-core
+- **Export for external apps** — optional setting that writes a small `data.json` snapshot (today/week commit counts, top project) on a background interval, for consumers like a Stream Deck plugin
 
 > [!NOTE]
 > Requires `git` on `$PATH`. Author defaults to `git config --global user.name`.
+
+### Export data for external apps
+
+When enabled in Settings, devcap.app periodically scans in the background and writes a snapshot to:
+
+```text
+~/Library/Application Support/com.konradmichalik.devcap/data.json
+```
+
+The file is written atomically with `0600` permissions and removed as soon as the setting is turned off.
 
 ## 🔥 Installation
 

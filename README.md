@@ -31,7 +31,7 @@ Scans a directory tree for git repos in parallel via the same Rust core, and ren
 
 When enabled in Settings, devcap.app periodically scans in the background and writes a snapshot to:
 
-```
+```text
 ~/Library/Application Support/com.konradmichalik.devcap/data.json
 ```
 

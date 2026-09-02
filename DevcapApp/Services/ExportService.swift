@@ -39,21 +39,22 @@ enum ExportService {
     private static let tempFileName = "data.json.tmp"
 
     static func buildPayload(
-        today: [ProjectLog],
-        week: [ProjectLog],
-        displayName: String = "devcap",
         ttlSeconds: Int,
-        now: Date = Date()
+        displayName: String = "devcap",
+        now: Date = Date(),
+        calendar: Calendar = .current,
+        scan: (String) -> [ProjectLog]
     ) -> ExportPayload {
-        let todayCount = today.reduce(0) { $0 + $1.totalCommits }
+        let week = scan("week")
+        let today = todayTotals(week, on: now, calendar: calendar)
         let weekCount = week.reduce(0) { $0 + $1.totalCommits }
         let top = ProjectSorting.sorted(week, order: "commits").first
 
         let views: [ExportView] = [
             ExportView(
-                id: "today", label: "Heute", value: String(todayCount),
-                detail: "\(today.count) Projekte",
-                state: todayCount == 0 ? .idle : .ok
+                id: "today", label: "Heute", value: String(today.commits),
+                detail: "\(today.projects) Projekte",
+                state: today.commits == 0 ? .idle : .ok
             ),
             ExportView(
                 id: "week", label: "Woche", value: String(weekCount),
@@ -75,6 +76,50 @@ enum ExportService {
             ttlSeconds: ttlSeconds,
             views: views
         )
+    }
+
+    /// Today's figures are a filter over the week's scan, not a second scan.
+    /// The week window starts at local Monday midnight, so it always contains
+    /// today, and one traversal of ~150 repositories is enough.
+    ///
+    /// The filter runs on `committerTimestamp`, not on `timestamp`. The scan's
+    /// own period selection is `git log --after`, which selects on the committer
+    /// date, so only that field reproduces what a dedicated `today` scan would
+    /// have returned. Filtering on the author date instead undercounts by every
+    /// commit rebased, amended or cherry-picked into today.
+    ///
+    /// The day boundary is local. A commit at `2026-09-02T00:30:00+02:00` belongs
+    /// to 2 September in Berlin but to 1 September in UTC, which is why the
+    /// comparison runs over absolute instants and an explicit `Calendar`.
+    private static func todayTotals(
+        _ week: [ProjectLog],
+        on day: Date,
+        calendar: Calendar
+    ) -> (commits: Int, projects: Int) {
+        let parser = ISO8601DateFormatter()
+
+        return week.reduce(into: (commits: 0, projects: 0)) { totals, project in
+            var seen = Set<String>()
+            let count = project.branches
+                .flatMap(\.commits)
+                .filter { isSameDay($0.committerTimestamp, as: day, calendar: calendar, parser: parser) }
+                .filter { seen.insert($0.hash).inserted }
+                .count
+
+            guard count > 0 else { return }
+            totals.commits += count
+            totals.projects += 1
+        }
+    }
+
+    private static func isSameDay(
+        _ timestamp: String,
+        as day: Date,
+        calendar: Calendar,
+        parser: ISO8601DateFormatter
+    ) -> Bool {
+        guard let date = parser.date(from: timestamp) else { return false }
+        return calendar.isDate(date, inSameDayAs: day)
     }
 
     static func applicationSupportURL(

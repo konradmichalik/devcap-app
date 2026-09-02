@@ -101,6 +101,7 @@ struct SettingsView: View {
                 .disabled(!appState.exportEnabled)
                 .onChange(of: appState.exportInterval) {
                     guard appState.exportEnabled else { return }
+                    appState.performExport()
                     appState.startExportTimer()
                 }
             }

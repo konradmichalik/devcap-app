@@ -13,7 +13,7 @@ struct AboutView: View {
 
             Image("DevcapLogo")
                 .resizable()
-                .aspectRatio(contentMode: .fit)
+                .scaledToFit()
                 .frame(height: 48)
 
             Text("Version \(appVersion)")

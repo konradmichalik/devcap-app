@@ -8,37 +8,37 @@ struct AboutView: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
-            Spacer()
-
-            Image("DevcapLogo")
+        VStack(spacing: 10) {
+            Image(nsImage: NSApp.applicationIconImage)
                 .resizable()
-                .scaledToFit()
-                .frame(height: 48)
+                .frame(width: 96, height: 96)
+                .accessibilityHidden(true)
+
+            DevcapWordmark(size: 30, showsGlyph: false)
+                .padding(.top, 4)
 
             Text("Version \(appVersion)")
-                .font(.subheadline)
+                .font(.caption)
                 .foregroundStyle(.secondary)
 
-            Button {
-                if let url = URL(string: "https://github.com/konradmichalik/devcap-app") {
-                    NSWorkspace.shared.open(url)
+            HStack(spacing: 8) {
+                Button("GitHub repository") {
+                    if let url = URL(string: "https://github.com/konradmichalik/devcap-app") {
+                        NSWorkspace.shared.open(url)
+                    }
                 }
-            } label: {
-                Label("GitHub Repository", systemImage: "link")
+                updateCheckSection
             }
-            .buttonStyle(.bordered)
-
-            updateCheckSection
+            .padding(.top, 6)
 
             Text("\u{00A9} 2026 Konrad Michalik")
                 .font(.caption)
-                .foregroundStyle(.tertiary)
-
-            Spacer()
+                .foregroundStyle(.secondary)
+                .padding(.top, 10)
         }
         .frame(maxWidth: .infinity)
-        .padding()
+        .padding(.vertical, 30)
+        .padding(.horizontal, 22)
     }
 
     @ViewBuilder

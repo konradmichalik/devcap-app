@@ -11,6 +11,9 @@ final class AppState: ObservableObject {
     @Published var lastRefresh: Date?
     @Published var allExpanded = true
     @Published var expansionID = UUID()
+    @Published private(set) var activity: [DayActivity] = []
+    @Published private(set) var freshProjectIDs: Set<String> = []
+    @Published private(set) var hasUnseenChanges = false
 
     @AppStorage("scanPath") var scanPath = ""
     @AppStorage("period") var period = "today"
@@ -23,10 +26,14 @@ final class AppState: ObservableObject {
     @AppStorage("exportEnabled") var exportEnabled = false
     @AppStorage("exportInterval") var exportInterval: TimeInterval = 900 // 15 min
 
-    /// Bridged from @Environment(\.openSettings) via MenubarView.onAppear,
+    /// Bridged from @Environment(\.openSettings) via the menubar label,
     /// because the AppDelegate has no access to SwiftUI scene environments.
     var openSettingsAction: (() -> Void)?
 
+    let scanPulse = ScanPulse()
+    private var freshness = FreshnessTracker()
+    private var refreshGeneration = 0
+    private var isPopoverVisible = false
     private var timer: AnyCancellable?
     private var exportTimer: AnyCancellable?
     private var exportTask: Task<Void, Never>?
@@ -51,6 +58,19 @@ final class AppState: ObservableObject {
         }
     }
 
+    var menubarIconState: MenubarIconState {
+        .resolve(isLoading: isLoading, hasProjects: !projects.isEmpty, hasUnseenChanges: hasUnseenChanges)
+    }
+
+    func popoverDidAppear() {
+        isPopoverVisible = true
+        hasUnseenChanges = false
+    }
+
+    func popoverDidDisappear() {
+        isPopoverVisible = false
+    }
+
     func toggleExpansion() {
         allExpanded.toggle()
         expansionID = UUID()
@@ -73,13 +93,28 @@ final class AppState: ObservableObject {
 
     func refresh() {
         guard !scanPath.isEmpty else { return }
+        refreshGeneration += 1
+        let generation = refreshGeneration
         isLoading = true
+        scanPulse.start()
+        let scanKey = "\(scanPath)|\(period)"
         Task.detached { [scanPath, period] in
             let results = DevcapBridge.scan(path: scanPath, period: period, author: nil)
             await MainActor.run { [weak self] in
-                guard let self else { return }
+                // A newer refresh started meanwhile, its result is the one to keep.
+                guard let self, generation == self.refreshGeneration else { return }
+                let now = Date()
+                self.freshProjectIDs = self.freshness.fresh(in: results, key: scanKey)
+                if !self.freshProjectIDs.isEmpty && !self.isPopoverVisible {
+                    self.hasUnseenChanges = true
+                }
+                self.activity = zip(
+                    ActivityMetrics.bucketDays(period: period, now: now, calendar: .current),
+                    ActivityMetrics.dailyCounts(results, period: period, now: now, calendar: .current)
+                ).map(DayActivity.init)
                 self.projects = self.sorted(results)
                 self.isLoading = false
+                self.scanPulse.stop()
                 self.lastRefresh = Date()
             }
         }

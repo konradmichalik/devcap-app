@@ -21,19 +21,29 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func showContextMenu(with event: NSEvent) {
         let menu = NSMenu()
 
-        let settingsItem = NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: "")
+        let refreshItem = NSMenuItem(title: "Refresh Now", action: #selector(refreshNow), keyEquivalent: "r")
+        refreshItem.target = self
+        menu.addItem(refreshItem)
+
+        menu.addItem(.separator())
+
+        let settingsItem = NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: ",")
         settingsItem.target = self
         menu.addItem(settingsItem)
 
         menu.addItem(.separator())
 
-        let quitItem = NSMenuItem(title: "Quit devcap", action: #selector(quitApp), keyEquivalent: "")
+        let quitItem = NSMenuItem(title: "Quit devcap", action: #selector(quitApp), keyEquivalent: "q")
         quitItem.target = self
         menu.addItem(quitItem)
 
         if let contentView = event.window?.contentView {
             NSMenu.popUpContextMenu(menu, with: event, for: contentView)
         }
+    }
+
+    @objc private func refreshNow() {
+        appState?.refresh()
     }
 
     @objc private func openSettings() {
@@ -46,6 +56,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
+/// The label exists from launch, unlike the popover content. The right-click menu
+/// needs `appState` and the settings action before the popover was ever opened.
+private struct MenubarLabel: View {
+    @ObservedObject var appState: AppState
+    let appDelegate: AppDelegate
+    @Environment(\.openSettings) private var openSettings
+
+    var body: some View {
+        Group {
+            Image("MenubarIcon")
+            if let count = appState.badgeCount {
+                Text("\(count)")
+            }
+        }
+        .task {
+            appDelegate.appState = appState
+            appState.openSettingsAction = { openSettings() }
+        }
+    }
+}
+
 @main
 struct DevcapApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
@@ -55,12 +86,8 @@ struct DevcapApp: App {
         MenuBarExtra {
             MenubarView()
                 .environmentObject(appState)
-                .task { appDelegate.appState = appState }
         } label: {
-            Image("MenubarIcon")
-            if let count = appState.badgeCount {
-                Text("\(count)")
-            }
+            MenubarLabel(appState: appState, appDelegate: appDelegate)
         }
         .menuBarExtraStyle(.window)
 

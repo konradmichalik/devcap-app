@@ -11,6 +11,8 @@ final class AppState: ObservableObject {
     @Published var lastRefresh: Date?
     @Published var allExpanded = true
     @Published var expansionID = UUID()
+    @Published private(set) var activity: [DayActivity] = []
+    @Published private(set) var freshProjectIDs: Set<String> = []
 
     @AppStorage("scanPath") var scanPath = ""
     @AppStorage("period") var period = "today"
@@ -27,6 +29,7 @@ final class AppState: ObservableObject {
     /// because the AppDelegate has no access to SwiftUI scene environments.
     var openSettingsAction: (() -> Void)?
 
+    private var freshness = FreshnessTracker()
     private var timer: AnyCancellable?
     private var exportTimer: AnyCancellable?
     private var exportTask: Task<Void, Never>?
@@ -74,10 +77,17 @@ final class AppState: ObservableObject {
     func refresh() {
         guard !scanPath.isEmpty else { return }
         isLoading = true
+        let scanKey = "\(scanPath)|\(period)"
         Task.detached { [scanPath, period] in
             let results = DevcapBridge.scan(path: scanPath, period: period, author: nil)
             await MainActor.run { [weak self] in
                 guard let self else { return }
+                let now = Date()
+                self.freshProjectIDs = self.freshness.fresh(in: results, key: scanKey)
+                self.activity = zip(
+                    ActivityMetrics.bucketDays(period: period, now: now, calendar: .current),
+                    ActivityMetrics.dailyCounts(results, period: period, now: now, calendar: .current)
+                ).map(DayActivity.init)
                 self.projects = self.sorted(results)
                 self.isLoading = false
                 self.lastRefresh = Date()

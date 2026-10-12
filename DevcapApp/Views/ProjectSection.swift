@@ -1,135 +1,208 @@
 import SwiftUI
 
-// MARK: - Diff Stat View
-
-private struct DiffStatLabel: View {
-    let stat: DiffStat
-
-    var body: some View {
-        HStack(spacing: 3) {
-            Text("+\(stat.insertions)")
-                .foregroundStyle(.green)
-            Text("-\(stat.deletions)")
-                .foregroundStyle(.red)
-        }
-        .font(.system(.caption2, design: .monospaced))
-    }
-}
-
-// MARK: - Project
-
 struct ProjectSection: View {
     let project: ProjectLog
+    let isFresh: Bool
     private let defaultExpanded: Bool
     @State private var isExpanded: Bool
+    @State private var isHovering = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @AppStorage("showOriginIcons") private var showOriginIcons = true
     @AppStorage("showDiffStats") private var showDiffStats = true
 
-    init(project: ProjectLog, expanded: Bool = true) {
+    init(project: ProjectLog, isFresh: Bool, expanded: Bool = true) {
         self.project = project
+        self.isFresh = isFresh
         self.defaultExpanded = expanded
         _isExpanded = State(initialValue: expanded)
     }
 
+    private var singleBranch: BranchLog? {
+        project.branches.count == 1 ? project.branches.first : nil
+    }
+
     var body: some View {
-        DisclosureGroup(isExpanded: Binding(
-            get: { isExpanded },
-            set: { newValue in withAnimation(nil) { isExpanded = newValue } }
-        )) {
-            ForEach(project.branches, id: \.name) { branch in
-                BranchSection(branch: branch, idPrefix: project.path, expanded: defaultExpanded)
-                    .padding(.leading, 20)
-                    .padding(.vertical, 3)
+        VStack(alignment: .leading, spacing: 0) {
+            header
+
+            if isExpanded {
+                expandedContent
             }
+        }
+        .padding(.vertical, isExpanded ? 2 : 0)
+        .background {
+            if isExpanded {
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(Color.primary.opacity(0.05))
+            }
+        }
+        .padding(.horizontal, isExpanded ? 6 : 0)
+        .padding(.vertical, isExpanded ? 2 : 0)
+    }
+
+    // MARK: - Header
+
+    private var header: some View {
+        Button {
+            withAnimation(nil) { isExpanded.toggle() }
         } label: {
-            Label {
-                HStack {
-                    Text(project.project)
-                        .fontWeight(.semibold)
-                    if showOriginIcons, let origin = project.origin,
-                       origin != "github", origin != "gitlab", origin != "gitlab-self-hosted",
-                       origin != "bitbucket" {
-                        Text(originDisplayName(origin))
-                            .font(.caption2)
-                            .foregroundStyle(.tertiary)
+            HStack(spacing: 8) {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 9, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .rotationEffect(.degrees(isExpanded ? 90 : 0))
+                    .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: isExpanded)
+                    .frame(width: 12)
+
+                originIcon
+                    .frame(width: 14)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    titleRow
+                    if !isExpanded, let latest = project.latestActivity {
+                        Text("Last commit \(latest)")
+                            .font(.system(size: 11))
+                            .foregroundStyle(.secondary)
                     }
-                    Spacer()
-                    if showDiffStats, !isExpanded, let stat = project.diffStat {
-                        DiffStatLabel(stat: stat)
-                    }
-                    Text("\(project.totalCommits)")
-                        .foregroundStyle(.secondary)
-                        .monospacedDigit()
-                        .font(.callout)
                 }
-            } icon: {
-                if showOriginIcons {
-                    originIcon
-                } else {
-                    Image(systemName: "folder.fill")
-                        .foregroundStyle(.secondary)
+
+                Spacer(minLength: 8)
+
+                if showDiffStats, !isExpanded, let stat = project.diffStat {
+                    DiffStatLabel(stat: stat)
+                        .frame(width: 84, alignment: .trailing)
                 }
+
+                Text("\(project.totalCommits)")
+                    .font(.system(size: 13, weight: .semibold))
+                    .monospacedDigit()
+                    .contentTransition(.numericText())
+                    .animation(reduceMotion ? nil : .default, value: project.totalCommits)
+                    .frame(minWidth: 34, alignment: .trailing)
             }
+            .padding(.vertical, 8)
+            .padding(.leading, isExpanded ? 4 : 10)
+            .padding(.trailing, isExpanded ? 8 : 14)
             .contentShape(Rectangle())
-            .onTapGesture { withAnimation(nil) { isExpanded.toggle() } }
-            .contextMenu {
-                Button {
-                    NSWorkspace.shared.open(URL(fileURLWithPath: project.path))
-                } label: {
-                    Label("Open in Finder", systemImage: "folder")
-                }
+        }
+        .buttonStyle(.plain)
+        .hoverHighlight(isHovering && !isExpanded, cornerRadius: 0)
+        .onHover { isHovering = $0 && !isExpanded }
+        .accessibilityValue(isExpanded ? "expanded" : "collapsed")
+        .contextMenu { projectMenu }
+    }
 
-                Button {
-                    TerminalLauncher.open(path: project.path)
-                } label: {
-                    Label("Open in Terminal", systemImage: "terminal")
-                }
+    private var titleRow: some View {
+        HStack(spacing: 6) {
+            Text(project.project)
+                .font(.system(size: 13, weight: .semibold))
+                .lineLimit(1)
+                .layoutPriority(1)
 
-                if let url = WebURL.from(project.remoteUrl) {
-                    Button {
-                        NSWorkspace.shared.open(url)
-                    } label: {
-                        Label("Open in Browser", systemImage: "globe")
-                    }
-                }
+            if isFresh {
+                Circle()
+                    .fill(Color.brandMint)
+                    .frame(width: 6, height: 6)
+                    .help("New commits since the last refresh")
+                    .accessibilityLabel("New commits")
+            }
 
-                Divider()
+            if showOriginIcons, let origin = project.origin, !Self.knownHosts.contains(origin) {
+                Text(originDisplayName(origin))
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
 
-                Button {
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString(project.path, forType: .string)
-                } label: {
-                    Label("Copy Path", systemImage: "doc.on.doc")
-                }
+            if isExpanded, let branch = singleBranch {
+                BranchChip(branch: branch)
             }
         }
     }
 
+    // MARK: - Content
+
+    @ViewBuilder
+    private var expandedContent: some View {
+        let showsDays = ActivityMetrics
+            .dayGroups(project.branches.flatMap(\.commits), now: Date(), calendar: .current)
+            .count > 1
+
+        if let branch = singleBranch {
+            CommitList(commits: branch.commits, showsDays: showsDays)
+                .padding(.leading, 22)
+                .padding(.bottom, 4)
+        } else {
+            VStack(alignment: .leading, spacing: 2) {
+                ForEach(project.branches, id: \.name) { branch in
+                    BranchGroup(branch: branch, showsDays: showsDays, expanded: defaultExpanded)
+                }
+            }
+            .padding(.bottom, 4)
+        }
+    }
+
+    @ViewBuilder
+    private var projectMenu: some View {
+        Button {
+            NSWorkspace.shared.open(URL(fileURLWithPath: project.path))
+        } label: {
+            Label("Open in Finder", systemImage: "folder")
+        }
+
+        Button {
+            TerminalLauncher.open(path: project.path)
+        } label: {
+            Label("Open in Terminal", systemImage: "terminal")
+        }
+
+        if let url = WebURL.from(project.remoteUrl) {
+            Button {
+                NSWorkspace.shared.open(url)
+            } label: {
+                Label("Open in Browser", systemImage: "globe")
+            }
+        }
+
+        Divider()
+
+        Button {
+            NSPasteboard.general.clearContents()
+            NSPasteboard.general.setString(project.path, forType: .string)
+        } label: {
+            Label("Copy Path", systemImage: "doc.on.doc")
+        }
+    }
+
+    // MARK: - Origin
+
+    private static let knownHosts: Set<String> = ["github", "gitlab", "gitlab-self-hosted", "bitbucket"]
+
     @ViewBuilder
     private var originIcon: some View {
-        switch project.origin {
-        case "github":
-            Image("OriginGitHub")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 14, height: 14)
-                .foregroundStyle(Color.secondary)
-        case "gitlab", "gitlab-self-hosted":
-            Image("OriginGitLab")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 14, height: 14)
-                .foregroundStyle(Color.secondary)
-        case "bitbucket":
-            Image("OriginBitbucket")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 14, height: 14)
-                .foregroundStyle(Color.secondary)
-        default:
-            Image(systemName: project.origin != nil ? "globe" : "folder.fill")
+        if showOriginIcons {
+            switch project.origin {
+            case "github":
+                providerImage("OriginGitHub")
+            case "gitlab", "gitlab-self-hosted":
+                providerImage("OriginGitLab")
+            case "bitbucket":
+                providerImage("OriginBitbucket")
+            default:
+                Image(systemName: project.origin != nil ? "globe" : "folder.fill")
+                    .foregroundStyle(.secondary)
+            }
+        } else {
+            Image(systemName: "folder.fill")
                 .foregroundStyle(.secondary)
         }
+    }
+
+    private func providerImage(_ name: String) -> some View {
+        Image(name)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 14, height: 14)
+            .foregroundStyle(Color.secondary)
     }
 
     private func originDisplayName(_ origin: String) -> String {
@@ -139,149 +212,6 @@ struct ProjectSection: View {
         case "bitbucket": "Bitbucket"
         case "gitlab-self-hosted": "GitLab"
         default: origin
-        }
-    }
-}
-
-// MARK: - Branch
-
-private struct BranchSection: View {
-    let branch: BranchLog
-    let idPrefix: String
-    @State private var isExpanded: Bool
-    @AppStorage("showDiffStats") private var showDiffStats = true
-
-    init(branch: BranchLog, idPrefix: String, expanded: Bool = true) {
-        self.branch = branch
-        self.idPrefix = idPrefix
-        _isExpanded = State(initialValue: expanded)
-    }
-
-    var body: some View {
-        DisclosureGroup(isExpanded: Binding(
-            get: { isExpanded },
-            set: { newValue in withAnimation(nil) { isExpanded = newValue } }
-        )) {
-            ForEach(branch.commits, id: \.hash) { commit in
-                CommitRow(commit: commit)
-                    .padding(.leading, 20)
-                    .padding(.vertical, 3)
-                    .id("\(idPrefix)/\(branch.name)/\(commit.hash)")
-            }
-        } label: {
-            Label {
-                HStack {
-                    Text(branch.name)
-                    Spacer()
-                    if showDiffStats, !isExpanded, let stat = branch.diffStat {
-                        DiffStatLabel(stat: stat)
-                    }
-                    Text("\(branch.commits.count)")
-                        .foregroundStyle(.tertiary)
-                        .monospacedDigit()
-                        .font(.caption)
-                }
-            } icon: {
-                Image(systemName: "arrow.triangle.branch")
-            }
-            .foregroundStyle(.secondary)
-            .font(.subheadline)
-            .contentShape(Rectangle())
-            .onTapGesture { withAnimation(nil) { isExpanded.toggle() } }
-            .contextMenu {
-                if let url = WebURL.from(branch.url) {
-                    Button {
-                        NSWorkspace.shared.open(url)
-                    } label: {
-                        Label("Open in Browser", systemImage: "globe")
-                    }
-
-                    Divider()
-                }
-
-                Button {
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString(branch.name, forType: .string)
-                } label: {
-                    Label("Copy Branch Name", systemImage: "doc.on.doc")
-                }
-            }
-        }
-        .id("\(idPrefix)/\(branch.name)")
-    }
-}
-
-// MARK: - Commit
-
-private struct CommitRow: View {
-    let commit: Commit
-    @AppStorage("coloredCommitTypes") private var coloredCommitTypes = true
-    @AppStorage("showDiffStats") private var showDiffStats = true
-
-    var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 6) {
-            if let type = commit.commitType {
-                Text(type)
-                    .font(.system(.caption2, design: .monospaced, weight: .medium))
-                    .foregroundStyle(coloredCommitTypes ? colorForType(type) : .secondary)
-            }
-
-            Text(commit.displayMessage)
-                .font(.callout)
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .help(commit.message)
-
-            Spacer()
-
-            if showDiffStats, let stat = commit.diffStat {
-                DiffStatLabel(stat: stat)
-            }
-
-            Text(commit.relativeTime)
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
-        }
-        .contextMenu {
-            if let url = WebURL.from(commit.url) {
-                Button {
-                    NSWorkspace.shared.open(url)
-                } label: {
-                    Label("Open in Browser", systemImage: "globe")
-                }
-
-                Divider()
-            }
-
-            Button {
-                copyToClipboard(commit.hash)
-            } label: {
-                Label("Copy Hash (\(String(commit.hash.prefix(7))))", systemImage: "doc.on.doc")
-            }
-
-            Button {
-                copyToClipboard(commit.message)
-            } label: {
-                Label("Copy Message", systemImage: "text.quote")
-            }
-        }
-    }
-
-    private func copyToClipboard(_ text: String) {
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(text, forType: .string)
-    }
-
-    private func colorForType(_ type: String) -> Color {
-        switch type {
-        case "feat": .green
-        case "fix": .red
-        case "refactor": .cyan
-        case "docs": .blue
-        case "test": .orange
-        case "style": .purple
-        case "chore", "ci", "perf", "build": .secondary
-        default: .primary
         }
     }
 }

@@ -17,9 +17,17 @@ private struct WindowHeightKey: PreferenceKey {
 struct MenubarView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.openSettings) private var openSettings
-    @State private var visibleProjectIDs: Set<String> = []
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var listContentHeight: CGFloat = 200
     @State private var windowContentHeight: CGFloat = 0
+
+    private static let maxListHeight: CGFloat = 480
+    private static let periodPhrases = [
+        "today": "today",
+        "yesterday": "yesterday",
+        "week": "this week",
+        "7d": "in the last 7 days",
+    ]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -38,6 +46,7 @@ struct MenubarView: View {
             footer
         }
         .frame(width: 400)
+        .background(Color(nsColor: .windowBackgroundColor))
         .background(
             GeometryReader { geo in
                 Color.clear.preference(key: WindowHeightKey.self, value: geo.size.height)
@@ -45,57 +54,71 @@ struct MenubarView: View {
         )
         .background(WindowSizer(contentHeight: windowContentHeight))
         .onPreferenceChange(WindowHeightKey.self) { windowContentHeight = $0 }
-        .onAppear {
-            appState.openSettingsAction = { [openSettings] in openSettings() }
-        }
     }
 
     // MARK: - Header
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack {
-                (Text("devcap") + Text(".app").italic())
-                    .font(.headline)
+                DevcapWordmark()
                 Spacer()
-                Picker("", selection: $appState.period) {
-                    Text("Today").tag("today")
-                    Text("Yesterday").tag("yesterday")
-                    Text("This Week").tag("week")
-                    Text("Last 7 Days").tag("7d")
-                }
-                .pickerStyle(.menu)
-                .controlSize(.small)
-                .frame(width: 110)
-                .onChange(of: appState.period) {
-                    appState.refresh()
+                statusLine
+            }
+
+            Picker("Period", selection: $appState.period) {
+                Text("Today").tag("today")
+                Text("Yesterday").tag("yesterday")
+                Text("Week").tag("week")
+                Text("7 Days").tag("7d")
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .onChange(of: appState.period) {
+                appState.refresh()
+            }
+
+            HStack(alignment: .bottom) {
+                summaryLine
+                Spacer()
+                if appState.activity.count > 1 {
+                    ActivitySparkline(activity: appState.activity)
                 }
             }
-            HStack(spacing: 4) {
-                if appState.isLoading && !appState.projects.isEmpty {
-                    ProgressView()
-                        .controlSize(.mini)
-                    Text("Refreshing...")
-                        .font(.caption)
-                        .foregroundStyle(.tertiary)
-                } else {
-                    Text("\(appState.totalCommits) commits")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    if let lastRefresh = appState.lastRefresh {
-                        Text("·")
-                            .font(.caption)
-                            .foregroundStyle(.quaternary)
-                        Text(updatedText(since: lastRefresh))
-                            .font(.caption)
-                            .foregroundStyle(.tertiary)
-                    }
-                }
-            }
-            .animation(.easeInOut(duration: 0.2), value: appState.isLoading)
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
+    }
+
+    private var summaryLine: some View {
+        let commits = appState.totalCommits
+        let projects = appState.projects.count
+        return HStack(spacing: 4) {
+            Text(ActivityMetrics.pluralized(commits, "commit"))
+                .fontWeight(.semibold)
+                .contentTransition(.numericText())
+                .animation(reduceMotion ? nil : .default, value: commits)
+            Text("in \(ActivityMetrics.pluralized(projects, "project"))")
+                .foregroundStyle(.secondary)
+        }
+        .font(.system(size: 12))
+    }
+
+    /// Fixed height, so toggling between "Refreshing" and "Updated" never changes
+    /// the header and with it the window.
+    private var statusLine: some View {
+        HStack(spacing: 4) {
+            if appState.isLoading && !appState.projects.isEmpty {
+                ProgressView()
+                    .controlSize(.mini)
+                Text("Refreshing...")
+            } else if let lastRefresh = appState.lastRefresh {
+                Text(updatedText(since: lastRefresh))
+            }
+        }
+        .font(.system(size: 11))
+        .foregroundStyle(.secondary)
+        .frame(height: 16)
     }
 
     private func updatedText(since date: Date) -> String {
@@ -108,45 +131,56 @@ struct MenubarView: View {
     // MARK: - Content
 
     private var projectList: some View {
-        ScrollViewReader { proxy in
-            HStack(spacing: 0) {
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 6) {
-                        ForEach(appState.projects) { project in
-                            ProjectSection(project: project, expanded: appState.allExpanded)
-                                .onAppear { visibleProjectIDs.insert(project.id) }
-                                .onDisappear { visibleProjectIDs.remove(project.id) }
-                        }
-                    }
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 14)
-                    .background(
-                        GeometryReader { geo in
-                            Color.clear.preference(
-                                key: ContentHeightKey.self,
-                                value: geo.size.height
-                            )
-                        }
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0) {
+                ForEach(appState.projects) { project in
+                    ProjectSection(
+                        project: project,
+                        isFresh: appState.freshProjectIDs.contains(project.id),
+                        expanded: appState.allExpanded
                     )
-                }
-                .scrollIndicators(.never)
-                .id(appState.expansionID)
-                .onPreferenceChange(ContentHeightKey.self) { height in
-                    listContentHeight = min(max(height, 80), 400)
                 }
 
-                if appState.projects.count > 1 {
-                    ProjectScrollIndicator(
-                        projects: appState.projects,
-                        visibleIDs: visibleProjectIDs,
-                        onJump: { id in
-                            withAnimation { proxy.scrollTo(id, anchor: .top) }
-                        }
-                    )
+                if let phrase = nudgePhrase {
+                    nudge(phrase)
                 }
             }
+            .padding(.vertical, 6)
+            .background(
+                GeometryReader { geo in
+                    Color.clear.preference(key: ContentHeightKey.self, value: geo.size.height)
+                }
+            )
+        }
+        .scrollIndicators(.never)
+        .id(appState.expansionID)
+        .onPreferenceChange(ContentHeightKey.self) { height in
+            listContentHeight = min(max(height, 80), Self.maxListHeight)
         }
         .frame(height: listContentHeight)
+    }
+
+    /// A short list for a single-day period usually means the day is young, so
+    /// point to the wider view instead of leaving the popover looking broken.
+    private var nudgePhrase: String? {
+        guard appState.projects.count <= 3, appState.totalCommits <= 10,
+              appState.period == "today" || appState.period == "yesterday" else { return nil }
+        return Self.periodPhrases[appState.period]
+    }
+
+    private func nudge(_ phrase: String) -> some View {
+        HStack(spacing: 6) {
+            Text("That is all for \(phrase).")
+                .foregroundStyle(.secondary)
+            Button("Show last 7 days") {
+                appState.period = "7d"
+            }
+            .buttonStyle(.link)
+        }
+        .font(.system(size: 12))
+        .frame(maxWidth: .infinity)
+        .padding(.top, 10)
+        .padding(.bottom, 4)
     }
 
     private var loadingView: some View {
@@ -163,99 +197,101 @@ struct MenubarView: View {
     }
 
     private var emptyView: some View {
-        VStack(spacing: 6) {
-            Image(systemName: "tray")
-                .font(.title2)
-                .foregroundStyle(.tertiary)
-            Text("No commits found")
-                .font(.caption)
+        let phrase = Self.periodPhrases[appState.period] ?? "in this period"
+        let path = (appState.scanPath as NSString).abbreviatingWithTildeInPath
+
+        return VStack(spacing: 4) {
+            DevcapGlyph(
+                size: 44,
+                tint: Color.secondary.opacity(0.7),
+                accent: Color.brandMint.opacity(0.35)
+            )
+            Text("No commits \(phrase)")
+                .font(.system(size: 14, weight: .semibold))
+                .padding(.top, 8)
+            Text("Nothing committed in the repositories under \(path).")
+                .font(.system(size: 12))
                 .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+
+            if appState.period == "7d" {
+                Button("Open Settings") {
+                    NSApplication.shared.activate(ignoringOtherApps: true)
+                    openSettings()
+                }
+                .padding(.top, 12)
+            } else {
+                Button("Show last 7 days") {
+                    appState.period = "7d"
+                }
+                .padding(.top, 12)
+            }
         }
+        .controlSize(.small)
+        .padding(.horizontal, 40)
+        .padding(.vertical, 28)
         .frame(maxWidth: .infinity)
-        .frame(height: 80)
     }
 
     // MARK: - Footer
 
     private var footer: some View {
-        HStack {
-            Button {
+        HStack(spacing: 2) {
+            footerButton("Refresh", disabled: appState.isLoading) {
                 appState.refresh()
-            } label: {
-                Image(systemName: "arrow.clockwise")
-                    .rotationEffect(.degrees(appState.isLoading ? 360 : 0))
-                    .animation(
-                        appState.isLoading
-                            ? .linear(duration: 0.8).repeatForever(autoreverses: false)
-                            : .default,
-                        value: appState.isLoading
-                    )
+            } icon: {
+                if appState.isLoading {
+                    ProgressView()
+                        .controlSize(.small)
+                        .scaleEffect(0.6)
+                } else {
+                    Image(systemName: "arrow.clockwise")
+                }
             }
-            .buttonStyle(.borderless)
-            .disabled(appState.isLoading)
 
-            Button {
-                appState.toggleExpansion()
-            } label: {
-                Image(systemName: appState.allExpanded
-                    ? "rectangle.compress.vertical"
-                    : "rectangle.expand.vertical")
+            if !appState.projects.isEmpty {
+                footerButton(appState.allExpanded ? "Collapse All" : "Expand All") {
+                    appState.toggleExpansion()
+                } icon: {
+                    Image(systemName: appState.allExpanded
+                        ? "rectangle.compress.vertical"
+                        : "rectangle.expand.vertical")
+                }
             }
-            .buttonStyle(.borderless)
-            .help(appState.allExpanded ? "Collapse All" : "Expand All")
 
             Spacer()
 
-            Button {
+            footerButton("Settings") {
                 NSApplication.shared.activate(ignoringOtherApps: true)
                 openSettings()
-            } label: {
+            } icon: {
                 Image(systemName: "gear")
             }
-            .buttonStyle(.borderless)
 
-            Button {
+            footerButton("Quit devcap") {
                 NSApplication.shared.terminate(nil)
-            } label: {
+            } icon: {
                 Image(systemName: "power")
             }
-            .buttonStyle(.borderless)
         }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 8)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 6)
     }
-}
 
-// MARK: - Project Scroll Indicator
-
-private struct ProjectScrollIndicator: View {
-    let projects: [ProjectLog]
-    let visibleIDs: Set<String>
-    let onJump: (String) -> Void
-
-    var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(.quaternary.opacity(0.5))
-                .frame(width: 1)
-
-            VStack(spacing: 0) {
-                ForEach(projects) { project in
-                    Button {
-                        onJump(project.id)
-                    } label: {
-                        Circle()
-                            .fill(visibleIDs.contains(project.id) ? AnyShapeStyle(.secondary) : AnyShapeStyle(.quaternary))
-                            .frame(width: visibleIDs.contains(project.id) ? 6 : 4,
-                                   height: visibleIDs.contains(project.id) ? 6 : 4)
-                            .frame(maxHeight: .infinity)
-                    }
-                    .buttonStyle(.plain)
-                    .help(project.project)
-                }
-            }
+    private func footerButton<Icon: View>(
+        _ title: String,
+        disabled: Bool = false,
+        action: @escaping () -> Void,
+        @ViewBuilder icon: () -> Icon
+    ) -> some View {
+        Button(action: action) {
+            icon()
+                .frame(width: 32, height: 32)
+                .contentShape(Rectangle())
         }
-        .frame(width: 14)
-        .padding(.vertical, 4)
+        .buttonStyle(.borderless)
+        .disabled(disabled)
+        .help(title)
+        .accessibilityLabel(title)
     }
 }

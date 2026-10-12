@@ -30,7 +30,7 @@ struct WindowSizer: NSViewRepresentable {
             var frame = window.frame
             frame.origin.y -= deltaY // pin the top edge under the menu bar
             frame.size.height += deltaY
-            window.setFrame(frame, display: true, animate: true)
+            window.setFrame(frame, display: true, animate: false)
         }
     }
 }

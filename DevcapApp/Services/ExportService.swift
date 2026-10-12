@@ -122,14 +122,21 @@ enum ExportService {
         return calendar.isDate(date, inSameDayAs: day)
     }
 
-    static func applicationSupportURL(
+    static func locationURL(
         baseDirectory: URL? = nil,
         bundleIdentifier: String = Bundle.main.bundleIdentifier ?? "com.konradmichalik.devcap"
     ) throws -> URL {
         let base = try baseDirectory ?? FileManager.default.url(
             for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true
         )
-        let dir = base.appendingPathComponent(bundleIdentifier, isDirectory: true)
+        return base.appendingPathComponent(bundleIdentifier, isDirectory: true)
+    }
+
+    static func applicationSupportURL(
+        baseDirectory: URL? = nil,
+        bundleIdentifier: String = Bundle.main.bundleIdentifier ?? "com.konradmichalik.devcap"
+    ) throws -> URL {
+        let dir = try locationURL(baseDirectory: baseDirectory, bundleIdentifier: bundleIdentifier)
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
     }

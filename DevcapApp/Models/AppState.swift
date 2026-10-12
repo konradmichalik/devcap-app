@@ -14,7 +14,6 @@ final class AppState: ObservableObject {
     @Published private(set) var activity: [DayActivity] = []
     @Published private(set) var freshProjectIDs: Set<String> = []
     @Published private(set) var hasUnseenChanges = false
-    @Published private(set) var scanPulse = true
 
     @AppStorage("scanPath") var scanPath = ""
     @AppStorage("period") var period = "today"
@@ -27,14 +26,14 @@ final class AppState: ObservableObject {
     @AppStorage("exportEnabled") var exportEnabled = false
     @AppStorage("exportInterval") var exportInterval: TimeInterval = 900 // 15 min
 
-    /// Bridged from @Environment(\.openSettings) via MenubarView.onAppear,
+    /// Bridged from @Environment(\.openSettings) via the menubar label,
     /// because the AppDelegate has no access to SwiftUI scene environments.
     var openSettingsAction: (() -> Void)?
 
+    let scanPulse = ScanPulse()
     private var freshness = FreshnessTracker()
     private var refreshGeneration = 0
     private var isPopoverVisible = false
-    private var pulseTask: Task<Void, Never>?
     private var timer: AnyCancellable?
     private var exportTimer: AnyCancellable?
     private var exportTask: Task<Void, Never>?
@@ -72,23 +71,6 @@ final class AppState: ObservableObject {
         isPopoverVisible = false
     }
 
-    private func startScanPulse() {
-        pulseTask?.cancel()
-        guard !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion else { return }
-        pulseTask = Task { [weak self] in
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .milliseconds(500))
-                self?.scanPulse.toggle()
-            }
-        }
-    }
-
-    private func stopScanPulse() {
-        pulseTask?.cancel()
-        pulseTask = nil
-        scanPulse = true
-    }
-
     func toggleExpansion() {
         allExpanded.toggle()
         expansionID = UUID()
@@ -114,7 +96,7 @@ final class AppState: ObservableObject {
         refreshGeneration += 1
         let generation = refreshGeneration
         isLoading = true
-        startScanPulse()
+        scanPulse.start()
         let scanKey = "\(scanPath)|\(period)"
         Task.detached { [scanPath, period] in
             let results = DevcapBridge.scan(path: scanPath, period: period, author: nil)
@@ -132,7 +114,7 @@ final class AppState: ObservableObject {
                 ).map(DayActivity.init)
                 self.projects = self.sorted(results)
                 self.isLoading = false
-                self.stopScanPulse()
+                self.scanPulse.stop()
                 self.lastRefresh = Date()
             }
         }

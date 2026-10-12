@@ -54,8 +54,9 @@ struct MenubarView: View {
         )
         .background(WindowSizer(contentHeight: windowContentHeight))
         .onPreferenceChange(WindowHeightKey.self) { windowContentHeight = $0 }
-        .onAppear { appState.popoverDidAppear() }
-        .onDisappear { appState.popoverDidDisappear() }
+        .background(WindowVisibilityObserver { isVisible in
+            isVisible ? appState.popoverDidAppear() : appState.popoverDidDisappear()
+        })
     }
 
     // MARK: - Header

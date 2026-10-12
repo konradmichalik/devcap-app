@@ -60,12 +60,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 /// needs `appState` and the settings action before the popover was ever opened.
 private struct MenubarLabel: View {
     @ObservedObject var appState: AppState
+    @ObservedObject var pulse: ScanPulse
     let appDelegate: AppDelegate
     @Environment(\.openSettings) private var openSettings
 
     var body: some View {
         Group {
-            Image(nsImage: MenubarGlyph.image(for: appState.menubarIconState, pulse: appState.scanPulse))
+            Image(nsImage: MenubarGlyph.image(for: appState.menubarIconState, pulse: pulse.isOn))
             if let count = appState.badgeCount {
                 Text("\(count)")
             }
@@ -87,7 +88,7 @@ struct DevcapApp: App {
             MenubarView()
                 .environmentObject(appState)
         } label: {
-            MenubarLabel(appState: appState, appDelegate: appDelegate)
+            MenubarLabel(appState: appState, pulse: appState.scanPulse, appDelegate: appDelegate)
         }
         .menuBarExtraStyle(.window)
 

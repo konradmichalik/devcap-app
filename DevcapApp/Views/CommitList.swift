@@ -53,9 +53,11 @@ struct CommitList: View {
     }
 }
 
-private struct CommitRow: View {
+struct CommitRow: View {
     let commit: Commit
     let showsTime: Bool
+    /// Shows the row as if hovered, for the settings preview.
+    var previewsHover = false
     @State private var isHovering = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
@@ -86,7 +88,7 @@ private struct CommitRow: View {
         .padding(.vertical, 5)
         .padding(.horizontal, 6)
         .overlay(alignment: .trailing) {
-            if isHovering, showDiffStats, let stat = commit.diffStat {
+            if isHovering || previewsHover, showDiffStats, let stat = commit.diffStat {
                 DiffStatLabel(stat: stat)
                     .fixedSize()
                     .padding(.horizontal, 6)
@@ -103,7 +105,7 @@ private struct CommitRow: View {
                     .help(filesHelp(stat))
             }
         }
-        .hoverHighlight(isHovering)
+        .hoverHighlight(isHovering || previewsHover)
         .onHover { isHovering = $0 }
         .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: isHovering)
         .contextMenu {

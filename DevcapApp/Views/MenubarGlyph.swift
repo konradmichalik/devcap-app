@@ -18,29 +18,28 @@ enum MenubarGlyph {
     }
 
     private static func draw(state: MenubarIconState, pulse: Bool, in rect: NSRect) {
-        let unit = rect.height * 0.92 / 51
-        let origin = CGPoint(x: rect.midX - 32 * unit, y: rect.midY - 32 * unit)
-        func point(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
-            CGPoint(x: origin.x + x * unit, y: origin.y + y * unit)
-        }
+        let unit = rect.height * 0.92 / GlyphGeometry.contentHeight
+        let transform = GlyphGeometry.transform(
+            unit: unit, origin: CGPoint(x: rect.midX - 32 * unit, y: rect.midY - 32 * unit)
+        )
 
         (state == .fresh ? ink : NSColor.black).setStroke()
 
-        let ring = NSBezierPath(ovalIn: NSRect(x: point(18, 26).x, y: point(18, 26).y, width: 28 * unit, height: 28 * unit))
-        ring.lineWidth = 7 * unit
+        let ring = NSBezierPath(ovalIn: GlyphGeometry.ring.applying(transform))
+        ring.lineWidth = GlyphGeometry.lineWidth * unit
         ring.stroke()
 
         let stem = NSBezierPath()
-        stem.move(to: point(46, 54))
-        stem.line(to: point(46, 12))
-        stem.lineWidth = 7 * unit
+        stem.move(to: GlyphGeometry.stemBottom.applying(transform))
+        stem.line(to: GlyphGeometry.stemTop.applying(transform))
+        stem.lineWidth = GlyphGeometry.lineWidth * unit
         stem.lineCapStyle = .round
         stem.stroke()
 
         // Replace instead of blend, so a dimmed dot does not show the stem through it.
         NSGraphicsContext.current?.compositingOperation = .copy
         dotColor(for: state, pulse: pulse).setFill()
-        NSBezierPath(ovalIn: NSRect(x: point(40.5, 6.5).x, y: point(40.5, 6.5).y, width: 11 * unit, height: 11 * unit)).fill()
+        NSBezierPath(ovalIn: GlyphGeometry.dot.applying(transform)).fill()
     }
 
     /// Opaque, unlike `labelColor`, so ring and stem do not darken where they overlap.

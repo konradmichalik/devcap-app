@@ -159,13 +159,21 @@ private struct DisplayTab: View {
 
 /// Mirrors a project row and two commit rows so each toggle has a visible effect.
 private struct AppearancePreview: View {
-    @Environment(\.colorScheme) private var colorScheme
-    @AppStorage("coloredCommitTypes") private var coloredCommitTypes = true
     @AppStorage("showOriginIcons") private var showOriginIcons = true
-    @AppStorage("showDiffStats") private var showDiffStats = true
+
+    private static func commit(_ type: String, _ message: String, stat: DiffStat) -> Commit {
+        let now = ISO8601DateFormatter().string(from: Date())
+        return Commit(hash: type, message: "\(type): \(message)", commitType: type, timestamp: now,
+                      committerTimestamp: now, relativeTime: "2h ago", url: nil, diffStat: stat)
+    }
+
+    private let rows = [
+        commit("feat", "add logo motion store", stat: DiffStat(filesChanged: 4, insertions: 86, deletions: 12)),
+        commit("fix", "keep filter after refresh", stat: DiffStat(filesChanged: 2, insertions: 145, deletions: 2)),
+    ]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 8) {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 9, weight: .semibold))
@@ -185,33 +193,18 @@ private struct AppearancePreview: View {
                 Spacer()
                 Text("14").fontWeight(.semibold).monospacedDigit()
             }
+            .padding(.bottom, 4)
 
-            row(type: "feat", message: "add logo motion store", hovering: false)
-            row(type: "fix", message: "keep filter after refresh", hovering: true)
+            ForEach(Array(rows.enumerated()), id: \.offset) { index, commit in
+                CommitRow(commit: commit, showsTime: false, previewsHover: index == rows.count - 1)
+                    .padding(.leading, 22)
+            }
         }
         .font(.system(size: 12.5))
         .padding(.vertical, 2)
+        .allowsHitTesting(false)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Preview of a project with two commits")
-    }
-
-    private func row(type: String, message: String, hovering: Bool) -> some View {
-        let tint = coloredCommitTypes ? CommitTypeStyle.color(type, scheme: colorScheme) : Color.secondary
-        return HStack(spacing: 8) {
-            Text(type)
-                .font(.system(size: 10.5, weight: .semibold, design: .monospaced))
-                .foregroundStyle(tint)
-                .frame(minWidth: 56, alignment: .leading)
-            Text(message)
-            Spacer()
-            if hovering, showDiffStats {
-                DiffStatLabel(stat: DiffStat(filesChanged: 2, insertions: 145, deletions: 2))
-            }
-        }
-        .padding(.leading, 22)
-        .padding(.trailing, 8)
-        .padding(.vertical, 3)
-        .background(hovering ? Color.primary.opacity(0.07) : .clear, in: RoundedRectangle(cornerRadius: 6, style: .continuous))
     }
 }
 

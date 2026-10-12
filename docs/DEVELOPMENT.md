@@ -5,11 +5,12 @@
 ```
 SwiftUI (MenuBarExtra, .window style)
     │
-    ├── DevcapApp.swift        App entry point
+    ├── DevcapApp.swift        App entry point, menubar label, right-click menu
     ├── AppState               @MainActor ObservableObject, @AppStorage settings
-    ├── MenubarView            Main popover with project tree
-    ├── SettingsView            User preferences (path, period, interval)
-    ├── ProjectSection         Collapsible project → branch → commit rows
+    ├── MenubarView            Popover: header, project list, empty states, footer
+    ├── ProjectSection         Collapsible project with branch and commit rows
+    ├── SettingsView           Tabs: General, Display, Export, About
+    ├── ActivityMetrics        Pure derivations: counts, daily buckets, day groups
     └── DevcapBridge           Swift ↔ C FFI wrapper
             │
             ▼
@@ -24,7 +25,8 @@ SwiftUI (MenuBarExtra, .window style)
 1. `AppState.refresh()` calls `DevcapBridge.scan(path, period, author)`
 2. Bridge calls C FFI function `devcap_scan()` → returns JSON string
 3. JSON is decoded into `[ProjectLog]` (Swift `Codable` structs)
-4. SwiftUI views render the tree via `@Published` properties
+4. `AppState` derives the daily activity series and the projects with new commits from the result
+5. SwiftUI views render the tree via `@Published` properties
 
 ### FFI boundary
 
@@ -58,14 +60,30 @@ DevcapApp/
 │   ├── devcap.h               Auto-generated C header
 │   └── DevcapBridge.swift     FFI wrapper (C string lifecycle + JSON decode)
 ├── Models/
-│   ├── AppState.swift         App state, scan logic, auto-refresh timer
+│   ├── AppState.swift         App state, scan logic, auto-refresh timer, icon state
 │   └── DevcapData.swift       Codable structs (ProjectLog, BranchLog, Commit)
+├── Services/
+│   ├── ActivityMetrics.swift  Compact counts, daily buckets, day groups, change detection
+│   ├── FreshnessTracker.swift Compares a scan with the previous one for the same folder and period
+│   ├── MenubarIconState.swift Which state the menubar icon shows
+│   ├── ExportService.swift    data.json snapshot for external apps
+│   └── ...                    Project sorting, terminal launching, web URL helpers
 ├── Views/
-│   ├── MenubarView.swift      Main menubar popover
-│   ├── ProjectSection.swift   Project/branch/commit tree rows
-│   └── SettingsView.swift     Preferences window
+│   ├── MenubarView.swift      Popover
+│   ├── PeriodPicker.swift     Full-width period switch
+│   ├── ProjectSection.swift   Project row and its expanded content
+│   ├── BranchViews.swift      Branch chip, branch group, branch context menu
+│   ├── CommitList.swift       Day groups and commit rows
+│   ├── ActivitySparkline.swift Commits per day
+│   ├── MenubarGlyph.swift     Menubar icon, drawn at runtime
+│   ├── DevcapBrand.swift      Glyph, wordmark and the brand color
+│   ├── SettingsView.swift     Settings tabs
+│   └── AboutView.swift        About tab
 ├── DevcapApp.swift            @main entry point
 └── Info.plist                 LSUIElement = true (no Dock icon)
+
+DevcapAppTests/                XCTest unit tests for the services
+scripts/generate-app-icon.swift  Renders the app icon PNGs
 
 devcap-ffi/
 ├── src/lib.rs                 FFI exports (scan, default_author, free)
@@ -79,7 +97,7 @@ devcap-ffi/
 
 - macOS 14.0+, Xcode 16+
 - Rust toolchain (`rustup`)
-- [XcodeGen](https://github.com/yonaskolb/xcodegen) — `brew install xcodegen`
+- [XcodeGen](https://github.com/yonaskolb/xcodegen): `brew install xcodegen`
 
 ### Commands
 
@@ -90,7 +108,28 @@ make build        # Full pipeline: ffi → xcode → xcodebuild
 make clean        # Remove all build artifacts
 ```
 
-Or open `DevcapApp.xcodeproj` in Xcode and press `Cmd+R` — the pre-build script runs `cargo build --release` automatically.
+Or open `DevcapApp.xcodeproj` in Xcode and press `Cmd+R`: the pre-build script runs `cargo build --release` automatically.
+
+## Testing
+
+```bash
+xcodebuild test -project DevcapApp.xcodeproj -scheme DevcapApp -destination 'platform=macOS'
+```
+
+Add `-only-testing:DevcapAppTests/ActivityMetricsTests` to run one test class. CI runs the linters only, not the tests.
+
+## Brand assets
+
+The mark is a lowercase "d": a ring (the commit), a stem (the history) and a dot (the latest commit). It lives in a 64 unit space in `DevcapGlyph` (`Views/DevcapBrand.swift`) and is reused in two other places:
+
+- **Menubar icon**: `MenubarGlyph` draws it at runtime. The states are template images, so the system tints them for light, dark and wallpaper-tinted menubars. Only the state with new commits carries color.
+- **App icon**: the PNGs in `AppIcon.appiconset` come from a script, keep its geometry in sync with `DevcapGlyph`:
+
+  ```bash
+  swift scripts/generate-app-icon.swift DevcapApp/Assets.xcassets/AppIcon.appiconset
+  ```
+
+The brand color is `Color.brandMint`, teal on light and mint on dark backgrounds.
 
 ## Updating devcap-core
 
@@ -109,7 +148,7 @@ cd devcap-ffi && cargo tree -p devcap-core
 # If ProjectLog/BranchLog/Commit fields changed:
 # 1. Update DevcapApp/Models/DevcapData.swift (add/remove fields)
 # 2. Update Views if new data should be displayed
-# 3. FFI layer (lib.rs) usually needs no changes — JSON passthrough
+# 3. FFI layer (lib.rs) usually needs no changes: JSON passthrough
 ```
 
 ## Linting
@@ -128,8 +167,8 @@ make lint
 make lint-rust
 ```
 
-- **`cargo fmt --check`** — enforces consistent formatting (run `cargo fmt` to auto-fix)
-- **`cargo clippy`** — static analysis with strict lints configured in `Cargo.toml`:
+- **`cargo fmt --check`**: enforces consistent formatting (run `cargo fmt` to auto-fix)
+- **`cargo clippy`**: static analysis with strict lints configured in `Cargo.toml`:
   - `unwrap_used = "deny"`, `todo = "deny"`
   - `expect_used = "warn"`, `dbg_macro = "warn"`
 
@@ -144,15 +183,19 @@ Configuration: `.swiftlint.yml` in the project root.
 Install SwiftLint: `brew install swiftlint`
 
 Key rules:
-- `force_unwrapping` — opt-in, matches Rust's strict unwrap policy
-- `file_length` — warning at 400 lines, error at 800
-- `function_body_length` — warning at 50 lines, error at 80
-- `line_length` — warning at 150 characters
+- `force_unwrapping`: opt-in, matches Rust's strict unwrap policy
+- `file_length`: warning at 400 lines, error at 800
+- `function_body_length`: warning at 50 lines, error at 80
+- `line_length`: warning at 150 characters
 
 ## Key design decisions
 
-- **LSUIElement** — app has no Dock icon, menubar-only via `MenuBarExtra`
-- **JSON over FFI** — Rust serializes to JSON, Swift decodes. Simple, no complex C structs
-- **XcodeGen** — `project.yml` is the source of truth, `.xcodeproj` is generated
-- **Rayon** — parallel repo scanning in the FFI layer for performance
-- **@AppStorage** — all user settings persist automatically via UserDefaults
+- **LSUIElement**: app has no Dock icon, menubar-only via `MenuBarExtra`
+- **JSON over FFI**: Rust serializes to JSON, Swift decodes. Simple, no complex C structs
+- **XcodeGen**: `project.yml` is the source of truth, `.xcodeproj` is generated
+- **Rayon**: parallel repo scanning in the FFI layer for performance
+- **@AppStorage**: all user settings persist automatically via UserDefaults
+- **Runtime menubar icon**: drawn in code instead of shipped as PNGs, so one geometry serves every state
+- **Own period switch**: the native segmented control cannot be stretched to the popover width
+- **Opaque popover**: text stays readable on any wallpaper
+- **No height animation**: the popover resizes without animation, because expanding and refreshing changed the height while the window was still resizing

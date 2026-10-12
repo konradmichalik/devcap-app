@@ -1,12 +1,16 @@
 import SwiftUI
 
-extension Color {
+extension NSColor {
     /// Teal on light backgrounds, mint on dark ones, so the accent keeps contrast in both.
-    static let brandMint = Color(nsColor: NSColor(name: nil) { appearance in
+    static let brandMint = NSColor(name: nil) { appearance in
         appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
             ? NSColor(srgbRed: 0.369, green: 0.918, blue: 0.831, alpha: 1)
             : NSColor(srgbRed: 0.059, green: 0.624, blue: 0.541, alpha: 1)
-    })
+    }
+}
+
+extension Color {
+    static let brandMint = Color(nsColor: .brandMint)
 }
 
 /// The devcap mark: a lowercase "d" built from a commit node (ring) and the

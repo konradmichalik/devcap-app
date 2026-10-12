@@ -54,6 +54,8 @@ struct MenubarView: View {
         )
         .background(WindowSizer(contentHeight: windowContentHeight))
         .onPreferenceChange(WindowHeightKey.self) { windowContentHeight = $0 }
+        .onAppear { appState.popoverDidAppear() }
+        .onDisappear { appState.popoverDidDisappear() }
     }
 
     // MARK: - Header
@@ -66,17 +68,10 @@ struct MenubarView: View {
                 statusLine
             }
 
-            Picker("Period", selection: $appState.period) {
-                Text("Today").tag("today")
-                Text("Yesterday").tag("yesterday")
-                Text("Week").tag("week")
-                Text("7 Days").tag("7d")
-            }
-            .pickerStyle(.segmented)
-            .labelsHidden()
-            .onChange(of: appState.period) {
-                appState.refresh()
-            }
+            PeriodPicker(selection: $appState.period)
+                .onChange(of: appState.period) {
+                    appState.refresh()
+                }
 
             HStack(alignment: .bottom) {
                 summaryLine

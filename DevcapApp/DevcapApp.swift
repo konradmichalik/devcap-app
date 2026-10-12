@@ -65,7 +65,7 @@ private struct MenubarLabel: View {
 
     var body: some View {
         Group {
-            Image("MenubarIcon")
+            Image(nsImage: MenubarGlyph.image(for: appState.menubarIconState, pulse: appState.scanPulse))
             if let count = appState.badgeCount {
                 Text("\(count)")
             }

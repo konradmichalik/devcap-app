@@ -13,6 +13,8 @@ final class AppState: ObservableObject {
     @Published var expansionID = UUID()
     @Published private(set) var activity: [DayActivity] = []
     @Published private(set) var freshProjectIDs: Set<String> = []
+    @Published private(set) var hasUnseenChanges = false
+    @Published private(set) var scanPulse = true
 
     @AppStorage("scanPath") var scanPath = ""
     @AppStorage("period") var period = "today"
@@ -30,6 +32,8 @@ final class AppState: ObservableObject {
     var openSettingsAction: (() -> Void)?
 
     private var freshness = FreshnessTracker()
+    private var isPopoverVisible = false
+    private var pulseTask: Task<Void, Never>?
     private var timer: AnyCancellable?
     private var exportTimer: AnyCancellable?
     private var exportTask: Task<Void, Never>?
@@ -52,6 +56,36 @@ final class AppState: ObservableObject {
         case "commits": return totalCommits == 0 ? nil : totalCommits
         default: return nil
         }
+    }
+
+    var menubarIconState: MenubarIconState {
+        .resolve(isLoading: isLoading, hasProjects: !projects.isEmpty, hasUnseenChanges: hasUnseenChanges)
+    }
+
+    func popoverDidAppear() {
+        isPopoverVisible = true
+        hasUnseenChanges = false
+    }
+
+    func popoverDidDisappear() {
+        isPopoverVisible = false
+    }
+
+    private func startScanPulse() {
+        pulseTask?.cancel()
+        guard !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion else { return }
+        pulseTask = Task { [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .milliseconds(500))
+                self?.scanPulse.toggle()
+            }
+        }
+    }
+
+    private func stopScanPulse() {
+        pulseTask?.cancel()
+        pulseTask = nil
+        scanPulse = true
     }
 
     func toggleExpansion() {
@@ -77,6 +111,7 @@ final class AppState: ObservableObject {
     func refresh() {
         guard !scanPath.isEmpty else { return }
         isLoading = true
+        startScanPulse()
         let scanKey = "\(scanPath)|\(period)"
         Task.detached { [scanPath, period] in
             let results = DevcapBridge.scan(path: scanPath, period: period, author: nil)
@@ -84,12 +119,16 @@ final class AppState: ObservableObject {
                 guard let self else { return }
                 let now = Date()
                 self.freshProjectIDs = self.freshness.fresh(in: results, key: scanKey)
+                if !self.freshProjectIDs.isEmpty && !self.isPopoverVisible {
+                    self.hasUnseenChanges = true
+                }
                 self.activity = zip(
                     ActivityMetrics.bucketDays(period: period, now: now, calendar: .current),
                     ActivityMetrics.dailyCounts(results, period: period, now: now, calendar: .current)
                 ).map(DayActivity.init)
                 self.projects = self.sorted(results)
                 self.isLoading = false
+                self.stopScanPulse()
                 self.lastRefresh = Date()
             }
         }

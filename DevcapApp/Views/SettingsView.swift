@@ -144,7 +144,7 @@ private struct DisplayTab: View {
             HStack(spacing: 4) {
                 Text("Shown as")
                 HStack(spacing: 3) {
-                    Image("MenubarIcon")
+                    Image(nsImage: MenubarGlyph.image(for: .normal))
                         .renderingMode(.template)
                     Text("\(count)")
                 }

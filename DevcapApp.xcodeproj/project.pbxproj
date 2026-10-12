@@ -16,17 +16,21 @@
 		3A984E8DFF603D4E3A8D8D8A /* ActivityMetricsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC5A04D50AF7A4237F679B7 /* ActivityMetricsTests.swift */; };
 		42CD6F0F000EA964577BE656 /* CommitList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE602E647071228FD1B5137C /* CommitList.swift */; };
 		4C2BC409B8D5DED86D99EEF7 /* DevcapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113C70FB985E93A1CB99250B /* DevcapApp.swift */; };
+		4DBBEC2EB6376E7CD12DFFC4 /* PeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B3E5F1B647E1584795DADF /* PeriodPicker.swift */; };
 		58077332AC3FEF772C7A8F9C /* ExportServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19F73E8088351EFC427F7F1 /* ExportServiceTests.swift */; };
 		6F64E6548C00F7BDE5F3E6AE /* ProjectSortingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282C86A839D5D0C7CA673571 /* ProjectSortingTests.swift */; };
+		724752669E69BBBB8FC1261C /* MenubarGlyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA66C49E2AE2599EB5D1CD0 /* MenubarGlyph.swift */; };
 		725776ED67DCB682FEA6981F /* WebURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3350B2D343DF67923A25D83 /* WebURL.swift */; };
 		762EB505A833C6157D59DC40 /* DevcapBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709E728A69BCAE1F244BF117 /* DevcapBrand.swift */; };
 		7E3917923C4AABA4113A171C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CFA946A232A2F166D02FB /* AppState.swift */; };
+		8A6DAA827023F4577F2A3F3F /* MenubarIconState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289B6D7913695805CC60773E /* MenubarIconState.swift */; };
 		9B39365BF4CB9CDCB628E97A /* TerminalLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C472B1005F2F51515DF2C0B /* TerminalLauncher.swift */; };
 		A9858E4B29F6DCBA95800666 /* WebURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AEE09B20126E38B097535D /* WebURLTests.swift */; };
 		B1994FA286395E360192573E /* DevcapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32413C618082F5851532D08 /* DevcapData.swift */; };
 		B5ADC8F561364369AA1A17F7 /* ExportLocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F53557923CC1C946469E6A /* ExportLocationTests.swift */; };
 		B7BF8A82190121D3CD9488E5 /* WindowSizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E93E8E35E5BD4D041E9FF2B /* WindowSizer.swift */; };
 		B8EE4AA470D48F33B17B808B /* FreshnessTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F1D63D6D316F81A3B4D68A /* FreshnessTrackerTests.swift */; };
+		C0BCB40478B286918FD11B37 /* MenubarIconStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15583636C2F17EF54696DE0 /* MenubarIconStateTests.swift */; };
 		C2771958C74420A0D60360DF /* ActivitySparkline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39EFE503E62A4165337C98F /* ActivitySparkline.swift */; };
 		C8092F5583D1FF84685137A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0FFA6D1F6639946C3A3D935 /* Assets.xcassets */; };
 		D43218D425E8805194FEE87A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DF5743D5BF008ABB639727 /* SettingsView.swift */; };
@@ -53,7 +57,9 @@
 		1286483BCE0D6EB8916EF95F /* DevcapApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevcapApp.entitlements; sourceTree = "<group>"; };
 		1E93E8E35E5BD4D041E9FF2B /* WindowSizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowSizer.swift; sourceTree = "<group>"; };
 		282C86A839D5D0C7CA673571 /* ProjectSortingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSortingTests.swift; sourceTree = "<group>"; };
+		289B6D7913695805CC60773E /* MenubarIconState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarIconState.swift; sourceTree = "<group>"; };
 		28DF5743D5BF008ABB639727 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3BA66C49E2AE2599EB5D1CD0 /* MenubarGlyph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarGlyph.swift; sourceTree = "<group>"; };
 		3BC5A04D50AF7A4237F679B7 /* ActivityMetricsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMetricsTests.swift; sourceTree = "<group>"; };
 		4D5CFA946A232A2F166D02FB /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		50F53557923CC1C946469E6A /* ExportLocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportLocationTests.swift; sourceTree = "<group>"; };
@@ -63,6 +69,7 @@
 		6C472B1005F2F51515DF2C0B /* TerminalLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalLauncher.swift; sourceTree = "<group>"; };
 		6E62163AD428D2FCCFE475C9 /* TerminalLauncherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalLauncherTests.swift; sourceTree = "<group>"; };
 		709E728A69BCAE1F244BF117 /* DevcapBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevcapBrand.swift; sourceTree = "<group>"; };
+		75B3E5F1B647E1584795DADF /* PeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPicker.swift; sourceTree = "<group>"; };
 		75F9B69E4866D1C931A44463 /* DevcapApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevcapApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93AEE09B20126E38B097535D /* WebURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebURLTests.swift; sourceTree = "<group>"; };
 		93DD08CAA17D00D4A6B51310 /* devcap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = devcap.h; sourceTree = "<group>"; };
@@ -70,6 +77,7 @@
 		A19F73E8088351EFC427F7F1 /* ExportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportServiceTests.swift; sourceTree = "<group>"; };
 		A31C4087C8258A03308770D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A9F1D63D6D316F81A3B4D68A /* FreshnessTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshnessTrackerTests.swift; sourceTree = "<group>"; };
+		B15583636C2F17EF54696DE0 /* MenubarIconStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarIconStateTests.swift; sourceTree = "<group>"; };
 		BE602E647071228FD1B5137C /* CommitList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitList.swift; sourceTree = "<group>"; };
 		BECF073274FA80933B0CE525 /* DevcapBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevcapBridge.swift; sourceTree = "<group>"; };
 		D0FFA6D1F6639946C3A3D935 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -88,6 +96,7 @@
 				5C15A945F0DF6417BA4DA192 /* ActivityMetrics.swift */,
 				5D52CADA4B5886F83B53B859 /* ExportService.swift */,
 				56885B3DD01B33A82E2DBFEC /* FreshnessTracker.swift */,
+				289B6D7913695805CC60773E /* MenubarIconState.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -100,7 +109,9 @@
 				F7A51AE0C0A4691C179B559A /* BranchViews.swift */,
 				BE602E647071228FD1B5137C /* CommitList.swift */,
 				709E728A69BCAE1F244BF117 /* DevcapBrand.swift */,
+				3BA66C49E2AE2599EB5D1CD0 /* MenubarGlyph.swift */,
 				0DB8097A8FDC05DA90D14C22 /* MenubarView.swift */,
+				75B3E5F1B647E1584795DADF /* PeriodPicker.swift */,
 				0795567F64C1C4B25423054E /* ProjectSection.swift */,
 				28DF5743D5BF008ABB639727 /* SettingsView.swift */,
 				1E93E8E35E5BD4D041E9FF2B /* WindowSizer.swift */,
@@ -151,6 +162,7 @@
 				50F53557923CC1C946469E6A /* ExportLocationTests.swift */,
 				A19F73E8088351EFC427F7F1 /* ExportServiceTests.swift */,
 				A9F1D63D6D316F81A3B4D68A /* FreshnessTrackerTests.swift */,
+				B15583636C2F17EF54696DE0 /* MenubarIconStateTests.swift */,
 				282C86A839D5D0C7CA673571 /* ProjectSortingTests.swift */,
 				6E62163AD428D2FCCFE475C9 /* TerminalLauncherTests.swift */,
 				93AEE09B20126E38B097535D /* WebURLTests.swift */,
@@ -303,7 +315,10 @@
 				B1994FA286395E360192573E /* DevcapData.swift in Sources */,
 				1714389CCCBF5AE9A17A9562 /* ExportService.swift in Sources */,
 				168A3A5BF8741D8F707AF04D /* FreshnessTracker.swift in Sources */,
+				724752669E69BBBB8FC1261C /* MenubarGlyph.swift in Sources */,
+				8A6DAA827023F4577F2A3F3F /* MenubarIconState.swift in Sources */,
 				0DF745D5732098CE53AF4911 /* MenubarView.swift in Sources */,
+				4DBBEC2EB6376E7CD12DFFC4 /* PeriodPicker.swift in Sources */,
 				01E1EE2411984D71B05D672C /* ProjectSection.swift in Sources */,
 				E20EF3A19E6DD467A7B06B90 /* ProjectSorting.swift in Sources */,
 				D43218D425E8805194FEE87A /* SettingsView.swift in Sources */,
@@ -321,6 +336,7 @@
 				B5ADC8F561364369AA1A17F7 /* ExportLocationTests.swift in Sources */,
 				58077332AC3FEF772C7A8F9C /* ExportServiceTests.swift in Sources */,
 				B8EE4AA470D48F33B17B808B /* FreshnessTrackerTests.swift in Sources */,
+				C0BCB40478B286918FD11B37 /* MenubarIconStateTests.swift in Sources */,
 				6F64E6548C00F7BDE5F3E6AE /* ProjectSortingTests.swift in Sources */,
 				2D76516111CEF31E9794D186 /* TerminalLauncherTests.swift in Sources */,
 				A9858E4B29F6DCBA95800666 /* WebURLTests.swift in Sources */,

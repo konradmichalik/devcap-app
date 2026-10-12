@@ -32,6 +32,7 @@ final class AppState: ObservableObject {
     var openSettingsAction: (() -> Void)?
 
     private var freshness = FreshnessTracker()
+    private var refreshGeneration = 0
     private var isPopoverVisible = false
     private var pulseTask: Task<Void, Never>?
     private var timer: AnyCancellable?
@@ -110,13 +111,16 @@ final class AppState: ObservableObject {
 
     func refresh() {
         guard !scanPath.isEmpty else { return }
+        refreshGeneration += 1
+        let generation = refreshGeneration
         isLoading = true
         startScanPulse()
         let scanKey = "\(scanPath)|\(period)"
         Task.detached { [scanPath, period] in
             let results = DevcapBridge.scan(path: scanPath, period: period, author: nil)
             await MainActor.run { [weak self] in
-                guard let self else { return }
+                // A newer refresh started meanwhile, its result is the one to keep.
+                guard let self, generation == self.refreshGeneration else { return }
                 let now = Date()
                 self.freshProjectIDs = self.freshness.fresh(in: results, key: scanKey)
                 if !self.freshProjectIDs.isEmpty && !self.isPopoverVisible {

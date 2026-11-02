@@ -33,7 +33,7 @@ final class AppState: ObservableObject {
     let scanPulse = ScanPulse()
     private var freshness = FreshnessTracker()
     private var refreshGeneration = 0
-    private var isPopoverVisible = false
+    private(set) var isPopoverVisible = false
     private var timer: AnyCancellable?
     private var exportTimer: AnyCancellable?
     private var exportTask: Task<Void, Never>?

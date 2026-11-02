@@ -68,6 +68,8 @@ DevcapApp/
 │   ├── MenubarIconState.swift Which state the menubar icon shows
 │   ├── ExportService.swift    data.json snapshot for external apps
 │   └── ...                    Project sorting, terminal launching, web URL helpers
+├── Support/
+│   └── DevcapURL.swift        Parser for devcap:// URLs
 ├── Views/
 │   ├── MenubarView.swift      Popover
 │   ├── PeriodPicker.swift     Full-width period switch
@@ -80,7 +82,7 @@ DevcapApp/
 │   ├── SettingsView.swift     Settings tabs
 │   └── AboutView.swift        About tab
 ├── DevcapApp.swift            @main entry point
-└── Info.plist                 LSUIElement = true (no Dock icon)
+└── Info.plist                 LSUIElement = true (no Dock icon), devcap:// URL scheme
 
 DevcapAppTests/                XCTest unit tests for the services
 scripts/generate-app-icon.swift  Renders the app icon PNGs
@@ -191,6 +193,7 @@ Key rules:
 ## Key design decisions
 
 - **LSUIElement**: app has no Dock icon, menubar-only via `MenuBarExtra`
+- **URL scheme**: `devcap://show` is handled in `AppDelegate.application(_:open:)`. `MenuBarExtra` has no public API to open its popup, so the handler clicks the status item button, found through the private `StatusBar` window class like the right-click menu. A URL that launches the app is held until the menubar label has set `appState`
 - **JSON over FFI**: Rust serializes to JSON, Swift decodes. Simple, no complex C structs
 - **XcodeGen**: `project.yml` is the source of truth, `.xcodeproj` is generated
 - **Rayon**: parallel repo scanning in the FFI layer for performance

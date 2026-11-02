@@ -3,7 +3,51 @@ import SwiftUI
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var eventMonitor: Any?
-    weak var appState: AppState?
+    /// Set once the menubar label exists, so the status item can be clicked.
+    weak var appState: AppState? {
+        didSet { runPendingShow() }
+    }
+    private var pendingShow = false
+
+    func application(_ application: NSApplication, open urls: [URL]) {
+        guard urls.contains(where: DevcapURL.isShow) else { return }
+        pendingShow = true
+        runPendingShow()
+    }
+
+    /// A URL can launch the app, so it may arrive before `appState` is set.
+    private func runPendingShow() {
+        guard let appState, pendingShow else { return }
+        pendingShow = false
+        guard !appState.isPopoverVisible else { return }
+        NSApp.activate(ignoringOtherApps: true)
+        Task { await clickStatusItemWhenReady() }
+    }
+
+    /// On a cold launch the status item window may not exist yet, so retry briefly.
+    private func clickStatusItemWhenReady() async {
+        for _ in 0..<10 {
+            if clickStatusItem() { return }
+            try? await Task.sleep(for: .milliseconds(200))
+        }
+    }
+
+    /// MenuBarExtra has no public API to open its popup, so click the status item button.
+    /// Finds it through the private window class name, like the right-click detection.
+    private func clickStatusItem() -> Bool {
+        let button = NSApp.windows
+            .filter { String(describing: type(of: $0)).contains("StatusBar") }
+            .lazy
+            .compactMap { $0.contentView.flatMap(Self.firstButton) }
+            .first
+        button?.performClick(nil)
+        return button != nil
+    }
+
+    private static func firstButton(in view: NSView) -> NSButton? {
+        if let button = view as? NSButton { return button }
+        return view.subviews.lazy.compactMap(firstButton).first
+    }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Detect right-clicks on the MenuBarExtra status item.

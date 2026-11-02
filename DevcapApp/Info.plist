@@ -4,6 +4,17 @@
 <dict>
     <key>LSUIElement</key>
     <true/>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>com.konradmichalik.devcap</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>devcap</string>
+            </array>
+        </dict>
+    </array>
     <key>CFBundleDisplayName</key>
     <string>devcap.app</string>
     <key>CFBundleShortVersionString</key>

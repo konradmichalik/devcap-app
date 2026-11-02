@@ -75,6 +75,10 @@ When enabled under Settings, Export, devcap.app scans in the background and writ
 
 The file is written atomically with `0600` permissions and removed as soon as the setting is turned off. Reveal shows it in Finder. Consumers such as a Stream Deck plugin read it from there.
 
+### Open the popup from other tools
+
+`open devcap://show` opens the popup, launching the app first if it is not running. An already open popup stays as it is.
+
 ## 📚 Documentation
 
 | Topic | What's inside |
